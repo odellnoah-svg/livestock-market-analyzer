@@ -94,53 +94,81 @@ def to_int(v):
 
 
 def normalize_row(row, meta):
-    """Map a raw MARS row to the analyzer schema. Unknown-field names are
-    collected by the caller for schema review after the first real run."""
-    price_basis = first(row, "price_unit", "unit", "pricing_basis") or ""
-    price_basis = str(price_basis).lower()
+    """Map a raw MARS row to the analyzer schema (v2, verified against
+    discovery samples 2026-07)."""
+    price_basis = str(first(row, "price_unit") or "").lower()
     if "head" in price_basis:
         basis = "per_head"
-    elif "cwt" in price_basis or "hundred" in price_basis:
+    elif "cwt" in price_basis:
         basis = "per_cwt"
     else:
-        basis = price_basis or None  # keep raw; resolve after discovery
+        basis = price_basis or None
+
+    cat = first(row, "category")            # Cattle / Sheep / Goats
+    species = {"cattle": "cattle", "sheep": "sheep",
+               "goats": "goat", "goat": "goat"}.get(str(cat).lower(), meta["species"])
 
     return {
-        "date": first(row, "report_date", "report_begin_date", "published_date"),
+        "date": first(row, "report_date", "report_begin_date"),
         "slug_id": meta["slug_id"],
         "market_group": meta["market_group"],
-        "species": meta["species"],
+        "species": species,
         "tier": meta["tier"],
-        "category": first(row, "category", "commodity_category"),
-        "commodity": first(row, "commodity"),
-        "cls": first(row, "class", "class_name"),
-        "grade": first(row, "frame", "quality_grade_name", "grade"),
+        "commodity": first(row, "commodity"),     # e.g. Feeder Cattle, Slaughter Goats
+        "cls": first(row, "class"),               # Steers, Kids, Nannies/Does...
+        "frame": first(row, "frame"),
         "muscle": first(row, "muscle_grade"),
-        "wt_min": to_float(first(row, "avg_weight_min", "weight_range_low", "low_weight")),
-        "wt_max": to_float(first(row, "avg_weight_max", "weight_range_high", "high_weight")),
-        "wt_avg": to_float(first(row, "avg_weight", "average_weight")),
-        "price_min": to_float(first(row, "avg_price_min", "price_range_low", "low_price")),
-        "price_max": to_float(first(row, "avg_price_max", "price_range_high", "high_price")),
-        "price_avg": to_float(first(row, "avg_price", "average_price", "wtd_avg_price")),
+        "quality": first(row, "quality_grade_name"),
+        "dressing": first(row, "dressing"),
+        "yield_grade": first(row, "yield_grade"),
+        "age": first(row, "age"),
+        "preg": first(row, "pregnancy_stage"),
+        "calf_wt_est": to_float(first(row, "offspring_weight_est")),
+        "wt_min": to_float(first(row, "avg_weight_min")),
+        "wt_max": to_float(first(row, "avg_weight_max")),
+        "wt_avg": to_float(first(row, "avg_weight")),
+        "wt_break_lo": to_float(first(row, "weight_break_low")),
+        "wt_break_hi": to_float(first(row, "weight_break_high")),
+        "price_min": to_float(first(row, "avg_price_min")),
+        "price_max": to_float(first(row, "avg_price_max")),
+        "price_avg": to_float(first(row, "avg_price")),
         "basis": basis,
-        "head": to_int(first(row, "head_count", "headcount", "receipts")),
-        "lot_desc": first(row, "lot_desc", "comments", "offering"),
+        "head": to_int(first(row, "head_count")),
+        "receipts": to_int(first(row, "receipts")),
+        "lot_desc": (lambda v: None if v in ("None", "N/A") else v)(first(row, "lot_desc")),
+        "wt_collect": first(row, "weight_collect"),   # Actual vs Estimated
+        "final": first(row, "final_ind"),
     }
+
+
+def collect_narratives(rows):
+    """One narrative per report date (they repeat on every row)."""
+    out = {}
+    for r in rows:
+        if not isinstance(r, dict):
+            continue
+        d = r.get("report_date") or r.get("report_begin_date")
+        n = r.get("report_narrative")
+        if d and n and d not in out:
+            out[d] = n
+    return out
 
 
 KNOWN_FIELDS = {
     "report_date", "report_begin_date", "report_end_date", "published_date",
-    "category", "commodity_category", "commodity", "class", "class_name",
-    "frame", "quality_grade_name", "grade", "muscle_grade",
-    "avg_weight_min", "weight_range_low", "low_weight",
-    "avg_weight_max", "weight_range_high", "high_weight",
-    "avg_weight", "average_weight",
-    "avg_price_min", "price_range_low", "low_price",
-    "avg_price_max", "price_range_high", "high_price",
-    "avg_price", "average_price", "wtd_avg_price",
-    "price_unit", "unit", "pricing_basis",
-    "head_count", "headcount", "receipts",
-    "lot_desc", "comments", "offering",
+    "office_name", "office_state", "office_city", "office_code",
+    "market_type", "market_type_category",
+    "market_location_name", "market_location_state", "market_location_city",
+    "slug_id", "slug_name", "report_title", "group",
+    "category", "commodity", "class", "frame", "muscle_grade",
+    "quality_grade_name", "lot_desc", "freight", "price_unit",
+    "age", "pregnancy_stage", "weight_collect", "offspring_weight_est",
+    "dressing", "yield_grade", "head_count",
+    "avg_weight_min", "avg_weight_max", "avg_weight",
+    "avg_price_min", "avg_price_max", "avg_price",
+    "weight_break_low", "weight_break_high",
+    "receipts", "receipts_week_ago", "receipts_year_ago",
+    "comments_commodity", "report_narrative", "final_ind",
 }
 
 # ---------------------------------------------------------------- modes
@@ -193,7 +221,8 @@ def fetch_range(meta, start: date, end: date, api_key, cache_year=None):
         with gzip.open(cdir / f"{meta['slug_id']}_{cache_year}.json.gz", "wt") as f:
             json.dump(payload, f)
     rows = extract_rows(payload)
-    return [normalize_row(r, meta) for r in rows if isinstance(r, dict)]
+    recs = [normalize_row(r, meta) for r in rows if isinstance(r, dict)]
+    return recs, collect_narratives(rows)
 
 
 def write_year_file(meta, year, records):
@@ -204,6 +233,21 @@ def write_year_file(meta, year, records):
     with open(path, "w") as f:
         json.dump(records, f, separators=(",", ":"))
     return path, len(records)
+
+
+def write_narratives(meta, year, narratives):
+    if not narratives:
+        return
+    d = ROOT / "data" / meta["market_group"]
+    d.mkdir(parents=True, exist_ok=True)
+    path = d / f"{meta['slug_id']}_{year}_narratives.json"
+    existing = {}
+    if path.exists():
+        with open(path) as f:
+            existing = json.load(f)
+    existing.update(narratives)
+    with open(path, "w") as f:
+        json.dump(existing, f, indent=1)
 
 
 def mode_backfill(api_key, years):
@@ -217,12 +261,13 @@ def mode_backfill(api_key, years):
             if start > today:
                 continue
             try:
-                recs = fetch_range(meta, start, end, api_key, cache_year=y)
+                recs, narr = fetch_range(meta, start, end, api_key, cache_year=y)
             except Exception as e:
                 print(f"    {y}: ERROR {e}", flush=True)
                 continue
             if recs:
                 path, n = write_year_file(meta, y, recs)
+                write_narratives(meta, y, narr)
                 manifest.append({"slug_id": meta["slug_id"], "year": y,
                                  "records": n, "file": str(path.relative_to(ROOT))})
                 print(f"    {y}: {n} records", flush=True)
@@ -237,7 +282,7 @@ def mode_update(api_key, days):
     start = today - timedelta(days=days)
     for meta in load_config():
         try:
-            recs = fetch_range(meta, start, today, api_key)
+            recs, narr = fetch_range(meta, start, today, api_key)
         except Exception as e:
             print(f"[{meta['slug_id']}] ERROR {e}", flush=True)
             continue
@@ -245,6 +290,9 @@ def mode_update(api_key, days):
             print(f"[{meta['slug_id']}] no new data", flush=True)
             time.sleep(RATE_LIMIT_SLEEP)
             continue
+        for d, n in [(k, v) for k, v in narr.items()]:
+            y = d[-4:] if "/" in d else d[:4]
+            write_narratives(meta, y, {d: n})
         by_year = {}
         for r in recs:
             y = (r["date"] or str(today))[-4:] if "/" in str(r["date"] or "") \
@@ -256,8 +304,8 @@ def mode_update(api_key, days):
             if path.exists():
                 with open(path) as f:
                     existing = json.load(f)
-            key = lambda r: (r["date"], r["cls"], r["grade"], r["wt_min"],
-                             r["wt_max"], r["price_avg"], r["head"])
+            key = lambda r: (r["date"], r["commodity"], r["cls"], r["frame"],
+                             r["wt_min"], r["wt_max"], r["price_avg"], r["head"])
             seen = {key(r) for r in existing}
             merged = existing + [r for r in new if key(r) not in seen]
             write_year_file(meta, y, merged)
@@ -283,9 +331,10 @@ def mode_renormalize():
             continue
         with gzip.open(p, "rt") as f:
             payload = json.load(f)
-        recs = [normalize_row(r, meta) for r in extract_rows(payload)
-                if isinstance(r, dict)]
+        rows = extract_rows(payload)
+        recs = [normalize_row(r, meta) for r in rows if isinstance(r, dict)]
         _, n = write_year_file(meta, year, recs)
+        write_narratives(meta, year, collect_narratives(rows))
         print(f"[{sid}] {year}: {n} records")
     rebuild_index()
 
@@ -300,6 +349,8 @@ def rebuild_index():
     manifest = []
     dataroot = ROOT / "data"
     for p in sorted(dataroot.glob("*/*.json")):
+        if p.stem.endswith("_narratives"):
+            continue
         sid, year = p.stem.split("_")
         with open(p) as f:
             n = len(json.load(f))
