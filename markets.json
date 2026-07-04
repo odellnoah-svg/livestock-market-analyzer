@@ -21,7 +21,6 @@
     { "slug_id": 1845, "slug": "AMS_1845", "title": "Southwest Missouri Weekly Cattle Auction Summary", "location": "SW MO", "species": "cattle", "tier": "context", "market_group": "swmo_cattle_summary" },
     { "slug_id": 1895, "slug": "AMS_1895", "title": "Kansas Weekly Cattle Auction Summary", "location": "KS", "species": "cattle", "tier": "context", "market_group": "ks_cattle_summary" },
     { "slug_id": 2051, "slug": "AMS_2051", "title": "Benton County Sale Barn", "location": "Siloam Springs, AR", "species": "cattle", "tier": "tradeable", "market_group": "benton_county" },
-    { "slug_id": 2050, "slug": "AMS_2050", "title": "North Arkansas Livestock", "location": "Green Forest, AR", "species": "cattle", "tier": "tradeable", "market_group": "north_arkansas" },
-    { "slug_id": 3232, "slug": "SJ_LS850", "title": "National Feeder & Stocker Cattle Summary", "location": "National", "species": "cattle", "tier": "context", "market_group": "national_summary" }
+    { "slug_id": 2050, "slug": "AMS_2050", "title": "North Arkansas Livestock", "location": "Green Forest, AR", "species": "cattle", "tier": "tradeable", "market_group": "north_arkansas" }
   ]
 }
