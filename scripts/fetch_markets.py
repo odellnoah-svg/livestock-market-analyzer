@@ -293,23 +293,40 @@ def mode_update(api_key, days):
         for d, n in [(k, v) for k, v in narr.items()]:
             y = d[-4:] if "/" in d else d[:4]
             write_narratives(meta, y, {d: n})
+
+        def row_year(r):
+            d = str(r["date"] or today.isoformat())
+            return d[-4:] if "/" in d else d[:4]
+
+        def in_window(datestr):
+            """Parse MM/DD/YYYY or ISO; True if within the fetched window."""
+            s = str(datestr or "")
+            try:
+                if "/" in s:
+                    m, dd, y = s.split("/")[:3]
+                    d = date(int(y), int(m), int(dd))
+                else:
+                    d = date.fromisoformat(s[:10])
+            except (ValueError, IndexError):
+                return False
+            return start <= d <= today
+
         by_year = {}
         for r in recs:
-            y = (r["date"] or str(today))[-4:] if "/" in str(r["date"] or "") \
-                else str(r["date"] or today.isoformat())[:4]
-            by_year.setdefault(y, []).append(r)
+            by_year.setdefault(row_year(r), []).append(r)
         for y, new in by_year.items():
             path = ROOT / "data" / meta["market_group"] / f"{meta['slug_id']}_{y}.json"
             existing = []
             if path.exists():
                 with open(path) as f:
                     existing = json.load(f)
-            key = lambda r: (r["date"], r["commodity"], r["cls"], r["frame"],
-                             r["wt_min"], r["wt_max"], r["price_avg"], r["head"])
-            seen = {key(r) for r in existing}
-            merged = existing + [r for r in new if key(r) not in seen]
+            # USDA's latest word is authoritative: drop every existing record
+            # inside the fetched window (catches corrections), then insert fresh.
+            kept = [r for r in existing if not in_window(r["date"])]
+            replaced = len(existing) - len(kept)
+            merged = kept + new
             write_year_file(meta, y, merged)
-            print(f"[{meta['slug_id']}] {y}: +{len(merged) - len(existing)} "
+            print(f"[{meta['slug_id']}] {y}: -{replaced} +{len(new)} "
                   f"(total {len(merged)})", flush=True)
         time.sleep(RATE_LIMIT_SLEEP)
     rebuild_index()
