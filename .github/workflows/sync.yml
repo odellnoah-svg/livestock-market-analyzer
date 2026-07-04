@@ -1,0 +1,59 @@
+name: Sync market data
+
+on:
+  schedule:
+    # Fridays 6:00 PM UTC (noon-1pm Central) — after the week's sale reports post
+    - cron: "0 18 * * 5"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Fetch mode"
+        type: choice
+        options: [update, discover, backfill, renormalize]
+        default: update
+      years:
+        description: "Years of history (backfill only)"
+        default: "5"
+      days:
+        description: "Days back (update only)"
+        default: "14"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run fetch
+        env:
+          MARS_API_KEY: ${{ secrets.MARS_API_KEY }}
+        run: |
+          MODE="${{ github.event.inputs.mode || 'update' }}"
+          if [ "$MODE" = "backfill" ]; then
+            python scripts/fetch_markets.py backfill --years "${{ github.event.inputs.years || '5' }}"
+          elif [ "$MODE" = "discover" ]; then
+            python scripts/fetch_markets.py discover
+          elif [ "$MODE" = "renormalize" ]; then
+            python scripts/fetch_markets.py renormalize
+          else
+            python scripts/fetch_markets.py update --days "${{ github.event.inputs.days || '14' }}"
+          fi
+
+      - name: Commit results
+        run: |
+          git config user.name "market-sync-bot"
+          git config user.email "actions@github.com"
+          git add data/ samples/ raw_cache/ || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Market data sync: ${{ github.event.inputs.mode || 'update' }} $(date -u +%Y-%m-%d)"
+            git push
+          fi
