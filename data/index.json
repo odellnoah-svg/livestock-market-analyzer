@@ -2,172 +2,40 @@
   "generated": "2026-07-04",
   "files": [
     {
-      "slug_id": 1826,
+      "slug_id": 2051,
       "year": 2021,
-      "records": 1104,
-      "file": "data/pawnee/1826_2021.json"
+      "records": 4225,
+      "file": "data/benton_county/2051_2021.json"
     },
     {
-      "slug_id": 1826,
+      "slug_id": 2051,
       "year": 2022,
-      "records": 640,
-      "file": "data/pawnee/1826_2022.json"
+      "records": 4210,
+      "file": "data/benton_county/2051_2022.json"
     },
     {
-      "slug_id": 1826,
+      "slug_id": 2051,
       "year": 2023,
-      "records": 560,
-      "file": "data/pawnee/1826_2023.json"
+      "records": 4508,
+      "file": "data/benton_county/2051_2023.json"
     },
     {
-      "slug_id": 1826,
+      "slug_id": 2051,
       "year": 2024,
-      "records": 518,
-      "file": "data/pawnee/1826_2024.json"
+      "records": 4428,
+      "file": "data/benton_county/2051_2024.json"
     },
     {
-      "slug_id": 1826,
+      "slug_id": 2051,
       "year": 2025,
-      "records": 609,
-      "file": "data/pawnee/1826_2025.json"
+      "records": 3888,
+      "file": "data/benton_county/2051_2025.json"
     },
     {
-      "slug_id": 1826,
+      "slug_id": 2051,
       "year": 2026,
-      "records": 350,
-      "file": "data/pawnee/1826_2026.json"
-    },
-    {
-      "slug_id": 1805,
-      "year": 2021,
-      "records": 1049,
-      "file": "data/diamond/1805_2021.json"
-    },
-    {
-      "slug_id": 1805,
-      "year": 2022,
-      "records": 1040,
-      "file": "data/diamond/1805_2022.json"
-    },
-    {
-      "slug_id": 1805,
-      "year": 2023,
-      "records": 1606,
-      "file": "data/diamond/1805_2023.json"
-    },
-    {
-      "slug_id": 1805,
-      "year": 2024,
-      "records": 1581,
-      "file": "data/diamond/1805_2024.json"
-    },
-    {
-      "slug_id": 1805,
-      "year": 2025,
-      "records": 2323,
-      "file": "data/diamond/1805_2025.json"
-    },
-    {
-      "slug_id": 1805,
-      "year": 2026,
-      "records": 1288,
-      "file": "data/diamond/1805_2026.json"
-    },
-    {
-      "slug_id": 1833,
-      "year": 2021,
-      "records": 2945,
-      "file": "data/mo_sheep_goat_summary/1833_2021.json"
-    },
-    {
-      "slug_id": 1833,
-      "year": 2022,
-      "records": 2560,
-      "file": "data/mo_sheep_goat_summary/1833_2022.json"
-    },
-    {
-      "slug_id": 1833,
-      "year": 2023,
-      "records": 3833,
-      "file": "data/mo_sheep_goat_summary/1833_2023.json"
-    },
-    {
-      "slug_id": 1833,
-      "year": 2024,
-      "records": 3588,
-      "file": "data/mo_sheep_goat_summary/1833_2024.json"
-    },
-    {
-      "slug_id": 1833,
-      "year": 2025,
-      "records": 4738,
-      "file": "data/mo_sheep_goat_summary/1833_2025.json"
-    },
-    {
-      "slug_id": 1833,
-      "year": 2026,
-      "records": 2442,
-      "file": "data/mo_sheep_goat_summary/1833_2026.json"
-    },
-    {
-      "slug_id": 3659,
-      "year": 2023,
-      "records": 2870,
-      "file": "data/salem/3659_2023.json"
-    },
-    {
-      "slug_id": 3659,
-      "year": 2024,
-      "records": 3315,
-      "file": "data/salem/3659_2024.json"
-    },
-    {
-      "slug_id": 3659,
-      "year": 2025,
-      "records": 2624,
-      "file": "data/salem/3659_2025.json"
-    },
-    {
-      "slug_id": 3659,
-      "year": 2026,
-      "records": 1430,
-      "file": "data/salem/3659_2026.json"
-    },
-    {
-      "slug_id": 1806,
-      "year": 2021,
-      "records": 640,
-      "file": "data/norwood/1806_2021.json"
-    },
-    {
-      "slug_id": 1806,
-      "year": 2022,
-      "records": 616,
-      "file": "data/norwood/1806_2022.json"
-    },
-    {
-      "slug_id": 1806,
-      "year": 2023,
-      "records": 1147,
-      "file": "data/norwood/1806_2023.json"
-    },
-    {
-      "slug_id": 1806,
-      "year": 2024,
-      "records": 934,
-      "file": "data/norwood/1806_2024.json"
-    },
-    {
-      "slug_id": 1806,
-      "year": 2025,
-      "records": 1463,
-      "file": "data/norwood/1806_2025.json"
-    },
-    {
-      "slug_id": 1806,
-      "year": 2026,
-      "records": 728,
-      "file": "data/norwood/1806_2026.json"
+      "records": 1391,
+      "file": "data/benton_county/2051_2026.json"
     },
     {
       "slug_id": 1804,
@@ -206,76 +74,76 @@
       "file": "data/buffalo/1804_2026.json"
     },
     {
-      "slug_id": 1832,
+      "slug_id": 1805,
       "year": 2021,
-      "records": 3714,
-      "file": "data/tulsa/1832_2021.json"
+      "records": 1049,
+      "file": "data/diamond/1805_2021.json"
     },
     {
-      "slug_id": 1832,
+      "slug_id": 1805,
       "year": 2022,
-      "records": 4895,
-      "file": "data/tulsa/1832_2022.json"
+      "records": 1040,
+      "file": "data/diamond/1805_2022.json"
     },
     {
-      "slug_id": 1832,
+      "slug_id": 1805,
       "year": 2023,
-      "records": 4173,
-      "file": "data/tulsa/1832_2023.json"
+      "records": 1606,
+      "file": "data/diamond/1805_2023.json"
     },
     {
-      "slug_id": 1832,
+      "slug_id": 1805,
       "year": 2024,
-      "records": 5108,
-      "file": "data/tulsa/1832_2024.json"
+      "records": 1581,
+      "file": "data/diamond/1805_2024.json"
     },
     {
-      "slug_id": 1832,
+      "slug_id": 1805,
       "year": 2025,
-      "records": 6800,
-      "file": "data/tulsa/1832_2025.json"
+      "records": 2323,
+      "file": "data/diamond/1805_2025.json"
     },
     {
-      "slug_id": 1832,
+      "slug_id": 1805,
       "year": 2026,
-      "records": 4188,
-      "file": "data/tulsa/1832_2026.json"
+      "records": 1288,
+      "file": "data/diamond/1805_2026.json"
     },
     {
-      "slug_id": 1831,
+      "slug_id": 3916,
       "year": 2021,
-      "records": 12349,
-      "file": "data/ok_cattle_summary/1831_2021.json"
+      "records": 0,
+      "file": "data/four_state/3916_2021.json"
     },
     {
-      "slug_id": 1831,
+      "slug_id": 3916,
       "year": 2022,
-      "records": 12832,
-      "file": "data/ok_cattle_summary/1831_2022.json"
+      "records": 0,
+      "file": "data/four_state/3916_2022.json"
     },
     {
-      "slug_id": 1831,
+      "slug_id": 3916,
       "year": 2023,
-      "records": 13443,
-      "file": "data/ok_cattle_summary/1831_2023.json"
+      "records": 0,
+      "file": "data/four_state/3916_2023.json"
     },
     {
-      "slug_id": 1831,
+      "slug_id": 3916,
       "year": 2024,
-      "records": 15179,
-      "file": "data/ok_cattle_summary/1831_2024.json"
+      "records": 0,
+      "file": "data/four_state/3916_2024.json"
     },
     {
-      "slug_id": 1831,
+      "slug_id": 3916,
       "year": 2025,
-      "records": 18334,
-      "file": "data/ok_cattle_summary/1831_2025.json"
+      "records": 1099,
+      "file": "data/four_state/3916_2025.json"
     },
     {
-      "slug_id": 1831,
+      "slug_id": 3916,
       "year": 2026,
-      "records": 10646,
-      "file": "data/ok_cattle_summary/1831_2026.json"
+      "records": 2632,
+      "file": "data/four_state/3916_2026.json"
     },
     {
       "slug_id": 1245,
@@ -350,76 +218,256 @@
       "file": "data/joplin/1797_2026.json"
     },
     {
-      "slug_id": 1281,
+      "slug_id": 1895,
       "year": 2021,
-      "records": 3949,
-      "file": "data/okc_west/1281_2021.json"
+      "records": 5483,
+      "file": "data/ks_cattle_summary/1895_2021.json"
     },
     {
-      "slug_id": 1281,
+      "slug_id": 1895,
       "year": 2022,
-      "records": 3811,
-      "file": "data/okc_west/1281_2022.json"
+      "records": 5972,
+      "file": "data/ks_cattle_summary/1895_2022.json"
     },
     {
-      "slug_id": 1281,
+      "slug_id": 1895,
       "year": 2023,
-      "records": 3997,
-      "file": "data/okc_west/1281_2023.json"
+      "records": 6069,
+      "file": "data/ks_cattle_summary/1895_2023.json"
     },
     {
-      "slug_id": 1281,
+      "slug_id": 1895,
       "year": 2024,
-      "records": 3464,
-      "file": "data/okc_west/1281_2024.json"
+      "records": 5841,
+      "file": "data/ks_cattle_summary/1895_2024.json"
     },
     {
-      "slug_id": 1281,
+      "slug_id": 1895,
       "year": 2025,
-      "records": 5148,
-      "file": "data/okc_west/1281_2025.json"
+      "records": 6620,
+      "file": "data/ks_cattle_summary/1895_2025.json"
     },
     {
-      "slug_id": 1281,
+      "slug_id": 1895,
       "year": 2026,
-      "records": 3078,
-      "file": "data/okc_west/1281_2026.json"
+      "records": 3208,
+      "file": "data/ks_cattle_summary/1895_2026.json"
     },
     {
-      "slug_id": 1825,
+      "slug_id": 1827,
       "year": 2021,
-      "records": 1008,
-      "file": "data/okc_west/1825_2021.json"
+      "records": 3731,
+      "file": "data/mcalester/1827_2021.json"
     },
     {
-      "slug_id": 1825,
+      "slug_id": 1827,
       "year": 2022,
-      "records": 974,
-      "file": "data/okc_west/1825_2022.json"
+      "records": 3684,
+      "file": "data/mcalester/1827_2022.json"
     },
     {
-      "slug_id": 1825,
+      "slug_id": 1827,
       "year": 2023,
-      "records": 998,
-      "file": "data/okc_west/1825_2023.json"
+      "records": 3676,
+      "file": "data/mcalester/1827_2023.json"
     },
     {
-      "slug_id": 1825,
+      "slug_id": 1827,
       "year": 2024,
-      "records": 893,
-      "file": "data/okc_west/1825_2024.json"
+      "records": 3441,
+      "file": "data/mcalester/1827_2024.json"
     },
     {
-      "slug_id": 1825,
+      "slug_id": 1827,
       "year": 2025,
-      "records": 1468,
-      "file": "data/okc_west/1825_2025.json"
+      "records": 4020,
+      "file": "data/mcalester/1827_2025.json"
     },
     {
-      "slug_id": 1825,
+      "slug_id": 1827,
       "year": 2026,
-      "records": 1024,
-      "file": "data/okc_west/1825_2026.json"
+      "records": 1906,
+      "file": "data/mcalester/1827_2026.json"
+    },
+    {
+      "slug_id": 1821,
+      "year": 2021,
+      "records": 17385,
+      "file": "data/mo_cattle_summary/1821_2021.json"
+    },
+    {
+      "slug_id": 1821,
+      "year": 2022,
+      "records": 17468,
+      "file": "data/mo_cattle_summary/1821_2022.json"
+    },
+    {
+      "slug_id": 1821,
+      "year": 2023,
+      "records": 18214,
+      "file": "data/mo_cattle_summary/1821_2023.json"
+    },
+    {
+      "slug_id": 1821,
+      "year": 2024,
+      "records": 17066,
+      "file": "data/mo_cattle_summary/1821_2024.json"
+    },
+    {
+      "slug_id": 1821,
+      "year": 2025,
+      "records": 17278,
+      "file": "data/mo_cattle_summary/1821_2025.json"
+    },
+    {
+      "slug_id": 1821,
+      "year": 2026,
+      "records": 9515,
+      "file": "data/mo_cattle_summary/1821_2026.json"
+    },
+    {
+      "slug_id": 1833,
+      "year": 2021,
+      "records": 2945,
+      "file": "data/mo_sheep_goat_summary/1833_2021.json"
+    },
+    {
+      "slug_id": 1833,
+      "year": 2022,
+      "records": 2560,
+      "file": "data/mo_sheep_goat_summary/1833_2022.json"
+    },
+    {
+      "slug_id": 1833,
+      "year": 2023,
+      "records": 3833,
+      "file": "data/mo_sheep_goat_summary/1833_2023.json"
+    },
+    {
+      "slug_id": 1833,
+      "year": 2024,
+      "records": 3588,
+      "file": "data/mo_sheep_goat_summary/1833_2024.json"
+    },
+    {
+      "slug_id": 1833,
+      "year": 2025,
+      "records": 4738,
+      "file": "data/mo_sheep_goat_summary/1833_2025.json"
+    },
+    {
+      "slug_id": 1833,
+      "year": 2026,
+      "records": 2442,
+      "file": "data/mo_sheep_goat_summary/1833_2026.json"
+    },
+    {
+      "slug_id": 2050,
+      "year": 2021,
+      "records": 4142,
+      "file": "data/north_arkansas/2050_2021.json"
+    },
+    {
+      "slug_id": 2050,
+      "year": 2022,
+      "records": 4395,
+      "file": "data/north_arkansas/2050_2022.json"
+    },
+    {
+      "slug_id": 2050,
+      "year": 2023,
+      "records": 4216,
+      "file": "data/north_arkansas/2050_2023.json"
+    },
+    {
+      "slug_id": 2050,
+      "year": 2024,
+      "records": 4172,
+      "file": "data/north_arkansas/2050_2024.json"
+    },
+    {
+      "slug_id": 2050,
+      "year": 2025,
+      "records": 3753,
+      "file": "data/north_arkansas/2050_2025.json"
+    },
+    {
+      "slug_id": 2050,
+      "year": 2026,
+      "records": 1312,
+      "file": "data/north_arkansas/2050_2026.json"
+    },
+    {
+      "slug_id": 1806,
+      "year": 2021,
+      "records": 640,
+      "file": "data/norwood/1806_2021.json"
+    },
+    {
+      "slug_id": 1806,
+      "year": 2022,
+      "records": 616,
+      "file": "data/norwood/1806_2022.json"
+    },
+    {
+      "slug_id": 1806,
+      "year": 2023,
+      "records": 1147,
+      "file": "data/norwood/1806_2023.json"
+    },
+    {
+      "slug_id": 1806,
+      "year": 2024,
+      "records": 934,
+      "file": "data/norwood/1806_2024.json"
+    },
+    {
+      "slug_id": 1806,
+      "year": 2025,
+      "records": 1463,
+      "file": "data/norwood/1806_2025.json"
+    },
+    {
+      "slug_id": 1806,
+      "year": 2026,
+      "records": 728,
+      "file": "data/norwood/1806_2026.json"
+    },
+    {
+      "slug_id": 1831,
+      "year": 2021,
+      "records": 12349,
+      "file": "data/ok_cattle_summary/1831_2021.json"
+    },
+    {
+      "slug_id": 1831,
+      "year": 2022,
+      "records": 12832,
+      "file": "data/ok_cattle_summary/1831_2022.json"
+    },
+    {
+      "slug_id": 1831,
+      "year": 2023,
+      "records": 13443,
+      "file": "data/ok_cattle_summary/1831_2023.json"
+    },
+    {
+      "slug_id": 1831,
+      "year": 2024,
+      "records": 15179,
+      "file": "data/ok_cattle_summary/1831_2024.json"
+    },
+    {
+      "slug_id": 1831,
+      "year": 2025,
+      "records": 18334,
+      "file": "data/ok_cattle_summary/1831_2025.json"
+    },
+    {
+      "slug_id": 1831,
+      "year": 2026,
+      "records": 10646,
+      "file": "data/ok_cattle_summary/1831_2026.json"
     },
     {
       "slug_id": 1280,
@@ -494,88 +542,148 @@
       "file": "data/okc_national/1823_2026.json"
     },
     {
-      "slug_id": 1827,
+      "slug_id": 1281,
       "year": 2021,
-      "records": 3731,
-      "file": "data/mcalester/1827_2021.json"
+      "records": 3949,
+      "file": "data/okc_west/1281_2021.json"
     },
     {
-      "slug_id": 1827,
+      "slug_id": 1281,
       "year": 2022,
-      "records": 3684,
-      "file": "data/mcalester/1827_2022.json"
+      "records": 3811,
+      "file": "data/okc_west/1281_2022.json"
     },
     {
-      "slug_id": 1827,
+      "slug_id": 1281,
       "year": 2023,
-      "records": 3676,
-      "file": "data/mcalester/1827_2023.json"
+      "records": 3997,
+      "file": "data/okc_west/1281_2023.json"
     },
     {
-      "slug_id": 1827,
+      "slug_id": 1281,
       "year": 2024,
-      "records": 3441,
-      "file": "data/mcalester/1827_2024.json"
+      "records": 3464,
+      "file": "data/okc_west/1281_2024.json"
     },
     {
-      "slug_id": 1827,
+      "slug_id": 1281,
       "year": 2025,
-      "records": 4020,
-      "file": "data/mcalester/1827_2025.json"
+      "records": 5148,
+      "file": "data/okc_west/1281_2025.json"
     },
     {
-      "slug_id": 1827,
+      "slug_id": 1281,
       "year": 2026,
-      "records": 1906,
-      "file": "data/mcalester/1827_2026.json"
+      "records": 3078,
+      "file": "data/okc_west/1281_2026.json"
     },
     {
-      "slug_id": 3916,
-      "year": 2025,
-      "records": 1099,
-      "file": "data/four_state/3916_2025.json"
-    },
-    {
-      "slug_id": 3916,
-      "year": 2026,
-      "records": 2632,
-      "file": "data/four_state/3916_2026.json"
-    },
-    {
-      "slug_id": 1821,
+      "slug_id": 1825,
       "year": 2021,
-      "records": 17385,
-      "file": "data/mo_cattle_summary/1821_2021.json"
+      "records": 1008,
+      "file": "data/okc_west/1825_2021.json"
     },
     {
-      "slug_id": 1821,
+      "slug_id": 1825,
       "year": 2022,
-      "records": 17468,
-      "file": "data/mo_cattle_summary/1821_2022.json"
+      "records": 974,
+      "file": "data/okc_west/1825_2022.json"
     },
     {
-      "slug_id": 1821,
+      "slug_id": 1825,
       "year": 2023,
-      "records": 18214,
-      "file": "data/mo_cattle_summary/1821_2023.json"
+      "records": 998,
+      "file": "data/okc_west/1825_2023.json"
     },
     {
-      "slug_id": 1821,
+      "slug_id": 1825,
       "year": 2024,
-      "records": 17066,
-      "file": "data/mo_cattle_summary/1821_2024.json"
+      "records": 893,
+      "file": "data/okc_west/1825_2024.json"
     },
     {
-      "slug_id": 1821,
+      "slug_id": 1825,
       "year": 2025,
-      "records": 17278,
-      "file": "data/mo_cattle_summary/1821_2025.json"
+      "records": 1468,
+      "file": "data/okc_west/1825_2025.json"
     },
     {
-      "slug_id": 1821,
+      "slug_id": 1825,
       "year": 2026,
-      "records": 9515,
-      "file": "data/mo_cattle_summary/1821_2026.json"
+      "records": 1024,
+      "file": "data/okc_west/1825_2026.json"
+    },
+    {
+      "slug_id": 1826,
+      "year": 2021,
+      "records": 1104,
+      "file": "data/pawnee/1826_2021.json"
+    },
+    {
+      "slug_id": 1826,
+      "year": 2022,
+      "records": 640,
+      "file": "data/pawnee/1826_2022.json"
+    },
+    {
+      "slug_id": 1826,
+      "year": 2023,
+      "records": 560,
+      "file": "data/pawnee/1826_2023.json"
+    },
+    {
+      "slug_id": 1826,
+      "year": 2024,
+      "records": 518,
+      "file": "data/pawnee/1826_2024.json"
+    },
+    {
+      "slug_id": 1826,
+      "year": 2025,
+      "records": 609,
+      "file": "data/pawnee/1826_2025.json"
+    },
+    {
+      "slug_id": 1826,
+      "year": 2026,
+      "records": 350,
+      "file": "data/pawnee/1826_2026.json"
+    },
+    {
+      "slug_id": 3659,
+      "year": 2021,
+      "records": 0,
+      "file": "data/salem/3659_2021.json"
+    },
+    {
+      "slug_id": 3659,
+      "year": 2022,
+      "records": 0,
+      "file": "data/salem/3659_2022.json"
+    },
+    {
+      "slug_id": 3659,
+      "year": 2023,
+      "records": 2870,
+      "file": "data/salem/3659_2023.json"
+    },
+    {
+      "slug_id": 3659,
+      "year": 2024,
+      "records": 3315,
+      "file": "data/salem/3659_2024.json"
+    },
+    {
+      "slug_id": 3659,
+      "year": 2025,
+      "records": 2624,
+      "file": "data/salem/3659_2025.json"
+    },
+    {
+      "slug_id": 3659,
+      "year": 2026,
+      "records": 1430,
+      "file": "data/salem/3659_2026.json"
     },
     {
       "slug_id": 1845,
@@ -614,112 +722,40 @@
       "file": "data/swmo_cattle_summary/1845_2026.json"
     },
     {
-      "slug_id": 1895,
+      "slug_id": 1832,
       "year": 2021,
-      "records": 5483,
-      "file": "data/ks_cattle_summary/1895_2021.json"
+      "records": 3714,
+      "file": "data/tulsa/1832_2021.json"
     },
     {
-      "slug_id": 1895,
+      "slug_id": 1832,
       "year": 2022,
-      "records": 5972,
-      "file": "data/ks_cattle_summary/1895_2022.json"
+      "records": 4895,
+      "file": "data/tulsa/1832_2022.json"
     },
     {
-      "slug_id": 1895,
+      "slug_id": 1832,
       "year": 2023,
-      "records": 6069,
-      "file": "data/ks_cattle_summary/1895_2023.json"
+      "records": 4173,
+      "file": "data/tulsa/1832_2023.json"
     },
     {
-      "slug_id": 1895,
+      "slug_id": 1832,
       "year": 2024,
-      "records": 5841,
-      "file": "data/ks_cattle_summary/1895_2024.json"
+      "records": 5108,
+      "file": "data/tulsa/1832_2024.json"
     },
     {
-      "slug_id": 1895,
+      "slug_id": 1832,
       "year": 2025,
-      "records": 6620,
-      "file": "data/ks_cattle_summary/1895_2025.json"
+      "records": 6800,
+      "file": "data/tulsa/1832_2025.json"
     },
     {
-      "slug_id": 1895,
+      "slug_id": 1832,
       "year": 2026,
-      "records": 3208,
-      "file": "data/ks_cattle_summary/1895_2026.json"
-    },
-    {
-      "slug_id": 2051,
-      "year": 2021,
-      "records": 4225,
-      "file": "data/benton_county/2051_2021.json"
-    },
-    {
-      "slug_id": 2051,
-      "year": 2022,
-      "records": 4210,
-      "file": "data/benton_county/2051_2022.json"
-    },
-    {
-      "slug_id": 2051,
-      "year": 2023,
-      "records": 4508,
-      "file": "data/benton_county/2051_2023.json"
-    },
-    {
-      "slug_id": 2051,
-      "year": 2024,
-      "records": 4428,
-      "file": "data/benton_county/2051_2024.json"
-    },
-    {
-      "slug_id": 2051,
-      "year": 2025,
-      "records": 3888,
-      "file": "data/benton_county/2051_2025.json"
-    },
-    {
-      "slug_id": 2051,
-      "year": 2026,
-      "records": 1391,
-      "file": "data/benton_county/2051_2026.json"
-    },
-    {
-      "slug_id": 2050,
-      "year": 2021,
-      "records": 4142,
-      "file": "data/north_arkansas/2050_2021.json"
-    },
-    {
-      "slug_id": 2050,
-      "year": 2022,
-      "records": 4395,
-      "file": "data/north_arkansas/2050_2022.json"
-    },
-    {
-      "slug_id": 2050,
-      "year": 2023,
-      "records": 4216,
-      "file": "data/north_arkansas/2050_2023.json"
-    },
-    {
-      "slug_id": 2050,
-      "year": 2024,
-      "records": 4172,
-      "file": "data/north_arkansas/2050_2024.json"
-    },
-    {
-      "slug_id": 2050,
-      "year": 2025,
-      "records": 3753,
-      "file": "data/north_arkansas/2050_2025.json"
-    },
-    {
-      "slug_id": 2050,
-      "year": 2026,
-      "records": 1312,
-      "file": "data/north_arkansas/2050_2026.json"
+      "records": 4188,
+      "file": "data/tulsa/1832_2026.json"
     }
   ]
 }
