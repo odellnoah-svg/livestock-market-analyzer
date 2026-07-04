@@ -1,0 +1,27 @@
+{
+  "comment": "Livestock Market Analyzer report configuration. tier: 'tradeable' = individual barn (actionable sell-buy prices), 'context' = regional/weekly summary (seasonal indexes). market_group merges paired feeder + slaughter/replacement reports into one market entity in the UI.",
+  "reports": [
+    { "slug_id": 1826, "slug": "AMS_1826", "title": "Pawnee Sale Barn Sheep/Goat", "location": "Pawnee, OK", "species": "sheep_goat", "tier": "tradeable", "market_group": "pawnee" },
+    { "slug_id": 1805, "slug": "AMS_1805", "title": "TS White Sheep/Goat", "location": "Diamond, MO", "species": "sheep_goat", "tier": "tradeable", "market_group": "diamond" },
+    { "slug_id": 1833, "slug": "AMS_1833", "title": "Missouri Weekly Sheep/Goat Auction Summary", "location": "MO", "species": "sheep_goat", "tier": "context", "market_group": "mo_sheep_goat_summary" },
+    { "slug_id": 3659, "slug": "AMS_3659", "title": "Salem Stockyards Sheep and Goat Auction", "location": "Salem, AR", "species": "sheep_goat", "tier": "tradeable", "market_group": "salem" },
+    { "slug_id": 1806, "slug": "AMS_1806", "title": "Producers Auction Yards Sheep/Goat", "location": "Norwood, MO", "species": "sheep_goat", "tier": "tradeable", "market_group": "norwood" },
+    { "slug_id": 1804, "slug": "AMS_1804", "title": "Buffalo Livestock Market Sheep/Goat", "location": "Buffalo, MO", "species": "sheep_goat", "tier": "tradeable", "market_group": "buffalo" },
+    { "slug_id": 1832, "slug": "AMS_1832", "title": "Tulsa Livestock Auction", "location": "Tulsa, OK", "species": "cattle", "tier": "tradeable", "market_group": "tulsa" },
+    { "slug_id": 1831, "slug": "AMS_1831", "title": "Oklahoma Weekly Cattle Auction Summary", "location": "OK", "species": "cattle", "tier": "context", "market_group": "ok_cattle_summary" },
+    { "slug_id": 1245, "slug": "AMS_1245", "title": "Joplin Regional Stockyards Feeder Cattle", "location": "Carthage, MO", "species": "cattle", "tier": "tradeable", "market_group": "joplin" },
+    { "slug_id": 1797, "slug": "AMS_1797", "title": "Joplin Regional Stockyards Slaughter/Replacement Cattle", "location": "Carthage, MO", "species": "cattle", "tier": "tradeable", "market_group": "joplin" },
+    { "slug_id": 1281, "slug": "AMS_1281", "title": "OKC West Livestock Auction", "location": "El Reno, OK", "species": "cattle", "tier": "tradeable", "market_group": "okc_west" },
+    { "slug_id": 1825, "slug": "AMS_1825", "title": "OKC West Livestock Auction Slaughter/Replacement Cattle", "location": "El Reno, OK", "species": "cattle", "tier": "tradeable", "market_group": "okc_west" },
+    { "slug_id": 1280, "slug": "AMS_1280", "title": "Oklahoma National Stockyards Feeder Cattle", "location": "Oklahoma City, OK", "species": "cattle", "tier": "tradeable", "market_group": "okc_national" },
+    { "slug_id": 1823, "slug": "AMS_1823", "title": "Oklahoma National Stockyards Slaughter/Replacement Cattle", "location": "Oklahoma City, OK", "species": "cattle", "tier": "tradeable", "market_group": "okc_national" },
+    { "slug_id": 1827, "slug": "AMS_1827", "title": "McAlester Union Livestock Auction", "location": "McAlester, OK", "species": "cattle", "tier": "tradeable", "market_group": "mcalester" },
+    { "slug_id": 3916, "slug": "AMS_3916", "title": "Four State Stockyards Cattle Auction", "location": "Exeter, MO", "species": "cattle", "tier": "tradeable", "market_group": "four_state" },
+    { "slug_id": 1821, "slug": "AMS_1821", "title": "Missouri Weekly Cattle Auction Summary", "location": "MO", "species": "cattle", "tier": "context", "market_group": "mo_cattle_summary" },
+    { "slug_id": 1845, "slug": "AMS_1845", "title": "Southwest Missouri Weekly Cattle Auction Summary", "location": "SW MO", "species": "cattle", "tier": "context", "market_group": "swmo_cattle_summary" },
+    { "slug_id": 1895, "slug": "AMS_1895", "title": "Kansas Weekly Cattle Auction Summary", "location": "KS", "species": "cattle", "tier": "context", "market_group": "ks_cattle_summary" },
+    { "slug_id": 2051, "slug": "AMS_2051", "title": "Benton County Sale Barn", "location": "Siloam Springs, AR", "species": "cattle", "tier": "tradeable", "market_group": "benton_county" },
+    { "slug_id": 2050, "slug": "AMS_2050", "title": "North Arkansas Livestock", "location": "Green Forest, AR", "species": "cattle", "tier": "tradeable", "market_group": "north_arkansas" },
+    { "slug_id": 3232, "slug": "SJ_LS850", "title": "National Feeder & Stocker Cattle Summary", "location": "National", "species": "cattle", "tier": "context", "market_group": "national_summary" }
+  ]
+}
