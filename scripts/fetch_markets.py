@@ -154,13 +154,17 @@ def mode_discover(api_key):
     outdir = ROOT / "samples"
     outdir.mkdir(exist_ok=True)
     unseen_fields = {}
+    today = date.today()
+    start = today - timedelta(days=10)
+    q = f"report_begin_date={start.strftime('%m/%d/%Y')}:{today.strftime('%m/%d/%Y')}"
     for meta in load_config():
         sid = meta["slug_id"]
         print(f"[{sid}] {meta['title']} ...", flush=True)
-        payload = api_get(str(sid), api_key)  # most recent report
+        payload = api_get(f"{sid}?q={quote(q, safe='=:/')}", api_key)
         rows = extract_rows(payload)
+        sample = rows[:300]  # schema inspection only — keep files small
         with open(outdir / f"{sid}.json", "w") as f:
-            json.dump(payload, f, indent=2)
+            json.dump(sample, f, indent=2)
         if rows:
             fields = set().union(*(r.keys() for r in rows if isinstance(r, dict)))
             unknown = sorted(fields - KNOWN_FIELDS)
