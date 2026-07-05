@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market Seasonal Index — Livestock Market Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<style>
+:root{
+  --ink:#26241f;          /* dark warm charcoal */
+  --ink-soft:#5c584f;
+  --paper:#f4f3ef;        /* cool working-paper */
+  --card:#fbfaf7;
+  --steel:#66727a;        /* historical band */
+  --steel-soft:#66727a2b;
+  --tag:#e8a013;          /* ear-tag yellow */
+  --tag-deep:#b97f0a;
+  --clay:#a8502c;         /* highs / caution */
+  --grass:#5c7a4a;        /* lows / opportunity */
+  --rule:#d9d6cd;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.45}
+.wrap{max-width:1060px;margin:0 auto;padding:26px 22px 46px}
+header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;
+  border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{width:26px;height:auto;flex:0 0 auto;overflow:visible}
+.brand-mark path{fill:var(--tag);stroke:var(--tag-deep);stroke-width:2.4}
+.brand-mark circle{fill:var(--paper);stroke:var(--tag-deep);stroke-width:2.4}
+h1{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:30px;letter-spacing:.4px;
+  margin:0;text-transform:uppercase}
+.sub{color:var(--ink-soft);font-size:13px;margin-top:1px}
+.method{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-soft);text-align:right}
+.species-tabs{display:flex;gap:2px;margin-bottom:0;border-bottom:2px solid var(--ink)}
+.species-tab{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:16px;letter-spacing:.5px;
+  text-transform:uppercase;padding:9px 22px;border:none;background:transparent;color:var(--ink-soft);cursor:pointer;
+  border-radius:6px 6px 0 0;position:relative;top:2px}
+.species-tab.on{background:var(--ink);color:var(--paper)}
+.species-tab:focus-visible{outline:2px solid var(--tag);outline-offset:2px}
+.view-tabs{display:flex;gap:16px;margin:16px 0 14px}
+.view-tab{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:14px;padding:6px 2px;border:none;
+  background:transparent;color:var(--ink-soft);cursor:pointer;border-bottom:2.5px solid transparent}
+.view-tab.on{color:var(--ink);border-bottom-color:var(--tag)}
+.view-tab:focus-visible{outline:2px solid var(--tag);outline-offset:2px}
+.barn-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{font-family:"IBM Plex Sans",sans-serif;font-weight:500;font-size:13px;padding:5px 12px;border:1.5px solid var(--rule);
+  border-radius:16px;background:var(--card);color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip.on{font-weight:600;background:var(--paper)}
+.chip:focus-visible{outline:2px solid var(--tag);outline-offset:1px}
+.chip-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 auto}
+.cmp-line{fill:none;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
+.wt-guide{stroke:var(--ink-soft);stroke-width:1.5;stroke-dasharray:4 4;opacity:.6}
+.wt-hit{fill:transparent;cursor:pointer}
+.wt-hit:hover{fill:var(--ink);opacity:.04}
+.tick-x.tick-sel{font-weight:700;fill:var(--ink)}
+.cmp-dot{stroke:var(--card);stroke-width:1.5;cursor:pointer;pointer-events:none}
+.dot-halo{fill:transparent;cursor:pointer}
+.chart-tip .tip-box{fill:var(--ink);opacity:.97}
+.chart-tip .tip-lead{stroke:var(--ink-soft);stroke-width:1;opacity:.5}
+.chart-tip .tip-barn{font-family:"Barlow Semi Condensed",sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.4px;text-transform:uppercase;fill:var(--paper)}
+.chart-tip .tip-price{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;fill:#fff}
+.chart-tip .tip-unit{font-size:11px;fill:var(--rule)}
+.chart-tip .tip-meta{font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;fill:var(--rule)}
+.cmp-dot.hi{stroke:var(--ink);stroke-width:2}
+.rank{margin-top:16px;background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:14px 16px}
+.rank-head{font-family:"Barlow Semi Condensed",sans-serif;font-weight:600;font-size:13px;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+.rank-tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.rank-tbl td{padding:7px 6px;border-bottom:1px solid var(--rule)}
+.rank-tbl tr:last-child td{border-bottom:none}
+.rank-tbl tr.top td{font-weight:600}
+.rank-tbl .rk{width:22px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace}
+.rank-tbl .bn{display:flex;align-items:center;gap:8px}
+.rank-tbl .pr{font-family:"IBM Plex Mono",monospace;text-align:right;white-space:nowrap}
+.rank-tbl .pr .unit{font-size:11px;color:var(--ink-soft);margin-left:2px}
+.rank-tbl .hd{text-align:right;color:var(--ink-soft);font-size:12.5px;white-space:nowrap}
+.rank-tbl .delta{text-align:right;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--clay);width:56px}
+.rank-tbl tr.top .delta{color:var(--grass)}
+.add-btn{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;
+  text-transform:uppercase;padding:8px 16px;border:1.5px solid var(--ink);border-radius:5px;background:var(--ink);
+  color:var(--paper);cursor:pointer;align-self:flex-end}
+.add-btn:disabled{opacity:.4;cursor:not-allowed}
+.add-btn:focus-visible{outline:2px solid var(--tag);outline-offset:2px}
+.explore-toggles{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:14px;
+  padding:10px 14px;background:var(--card);border:1.5px solid var(--rule);border-radius:8px}
+.explore-toggles .seg{display:flex;align-items:center;gap:7px;font-family:"Barlow Semi Condensed",sans-serif;
+  font-weight:600;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-soft)}
+.explore-toggles .seg select{font-family:"IBM Plex Sans",sans-serif;font-size:13px;padding:5px 8px;
+  border:1.5px solid var(--ink);border-radius:5px;background:var(--paper);text-transform:none}
+.explore-toggles .chk{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink)}
+.explore-toggles .chk input{width:16px;height:16px;accent-color:var(--tag-deep)}
+.clear-btn{margin-left:auto;font-size:12.5px;padding:5px 12px;border:1.5px solid var(--rule);border-radius:5px;
+  background:var(--paper);color:var(--ink-soft);cursor:pointer}
+.clear-btn:hover{border-color:var(--clay);color:var(--clay)}
+.explore-legend{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px;min-height:24px}
+.ex-chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;padding:4px 6px 4px 10px;
+  border:1.5px solid var(--rule);border-radius:16px;background:var(--card)}
+.ex-x{border:none;background:transparent;color:var(--ink-soft);font-size:17px;line-height:1;cursor:pointer;
+  padding:0 4px;border-radius:50%}
+.ex-x:hover{color:var(--clay)}
+.explore-legend .hint{font-size:13px;color:var(--ink-soft);font-style:italic}
+.grid-faint{stroke:var(--rule);opacity:.5}
+.controls{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+.controls label{display:flex;flex-direction:column;gap:4px;font-family:"Barlow Semi Condensed",sans-serif;
+  font-weight:600;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-soft)}
+.controls select{font-family:"IBM Plex Sans",sans-serif;font-size:14px;padding:7px 9px;border:1.5px solid var(--ink);
+  border-radius:5px;background:var(--card);color:var(--ink);min-width:120px}
+.controls select:focus-visible{outline:2px solid var(--tag);outline-offset:1px}
+.controls .chk{flex-direction:row;align-items:center;gap:7px;padding-bottom:8px;text-transform:none;
+  font-family:"IBM Plex Sans",sans-serif;font-weight:500;font-size:13.5px;letter-spacing:0;color:var(--ink)}
+.controls .chk input{width:16px;height:16px;accent-color:var(--tag-deep)}
+.tip{position:relative;color:var(--ink-soft);cursor:help;font-size:14px;line-height:1}
+.tip:hover::after,.tip:focus-visible::after{content:attr(data-tip);position:absolute;top:145%;left:50%;transform:translateX(-50%);
+  width:max-content;max-width:min(280px,calc(100vw - 30px));background:var(--ink);color:var(--paper);
+  font-family:"IBM Plex Sans",sans-serif;font-weight:400;font-size:12.5px;line-height:1.5;
+  padding:10px 12px;border-radius:7px;z-index:10;box-shadow:0 3px 10px #00000033}
+.tip:focus-visible{outline:2px solid var(--tag);outline-offset:2px;border-radius:50%}
+.chart{width:100%;height:auto;background:var(--card);border:1.5px solid var(--rule);border-radius:8px}
+.grid{stroke:var(--rule);stroke-width:1}
+.grid-100{stroke:var(--ink-soft);stroke-width:1;stroke-dasharray:5 4}
+.tick{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--ink-soft)}
+.tick-l{text-anchor:end}
+.tick-r{fill:var(--tag-deep)}
+.tick-x{text-anchor:middle;font-size:11.5px}
+.axis-name{font-family:"Barlow Semi Condensed",sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:1px;fill:var(--ink-soft)}
+.axis-name-r{fill:var(--tag-deep)}
+.band{fill:var(--steel-soft);stroke:none}
+.season-line{fill:none;stroke:var(--steel);stroke-width:2.4;stroke-linejoin:round}
+.cur-line{fill:none;stroke:var(--tag);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 1px 1px #00000022)}
+.eartag .tag-body{fill:var(--tag);stroke:var(--tag-deep);stroke-width:2.2}
+.eartag .tag-hole{fill:var(--paper);stroke:var(--tag-deep);stroke-width:2.2}
+.eartag .tag-text{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:19px;
+  text-anchor:middle;fill:var(--ink)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin:10px 2px 4px;font-size:13px;color:var(--ink-soft)}
+.legend .sw{display:inline-block;width:20px;height:4px;border-radius:2px;margin-right:7px;vertical-align:middle}
+.sw-line{background:var(--steel)}
+.sw-band{background:var(--steel-soft);height:10px}
+.sw-cur{background:var(--tag)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px}
+.stat{background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:13px 15px}
+.stat-label{font-family:"Barlow Semi Condensed",sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.8px;text-transform:uppercase;color:var(--ink-soft)}
+.stat-val{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:26px;margin-top:3px}
+.stat-val .unit{font-size:13px;color:var(--ink-soft);margin-left:3px}
+.stat-val .unit.idx{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--ink-soft);background:var(--rule);padding:1px 5px;border-radius:4px;margin-left:5px;vertical-align:2px}
+.stat-val.hi{color:var(--clay)}
+.stat-val.lo{color:var(--grass)}
+.stat-note{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+.badge{display:inline-block;font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.7px;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:8px;vertical-align:1px}
+.badge-lowvol{background:#f3e3c3;color:var(--tag-deep);border:1px solid var(--tag-deep)}
+.loading,.empty{padding:44px 20px;text-align:center;color:var(--ink-soft);background:var(--card);
+  border:1.5px dashed var(--rule);border-radius:8px;font-family:"IBM Plex Mono",monospace;font-size:13px}
+.error{padding:16px 20px;background:#f6e5dd;border:1.5px solid var(--clay);border-radius:8px;color:var(--clay)}
+.foot{margin-top:22px;padding-top:12px;border-top:1px solid var(--rule);
+  font-size:12px;color:var(--ink-soft)}
+@media (max-width:640px){
+  h1{font-size:23px}.method{display:none}
+  .controls select{min-width:105px}.stat-val{font-size:22px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .cur-line{stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw 1.1s ease-out forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+/* Livestock Market Analyzer — Views: Seasonal Index + Cross-Market Comparison
+   Client-side v1 (decision 2026-07-04). Loads data/ files directly.
+   Species-first navigation; multi-series overlay in the comparison view. */
+
+const {
+  useState,
+  useEffect,
+  useMemo,
+  useRef
+} = React;
+
+/* ---------- market registry (species-first) ---------- */
+const MARKETS = [
+// cattle tradeable barns
+{
+  group: "tulsa",
+  slug: 1832,
+  label: "Tulsa",
+  loc: "Tulsa, OK",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "joplin",
+  slug: 1245,
+  label: "Joplin",
+  loc: "Carthage, MO",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "mcalester",
+  slug: 1827,
+  label: "McAlester",
+  loc: "McAlester, OK",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "okc_west",
+  slug: 1281,
+  label: "OKC West",
+  loc: "El Reno, OK",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "okc_national",
+  slug: 1280,
+  label: "OKC National",
+  loc: "Oklahoma City",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "benton_county",
+  slug: 2051,
+  label: "Benton County",
+  loc: "Siloam Spgs, AR",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "north_arkansas",
+  slug: 2050,
+  label: "North Arkansas",
+  loc: "Green Forest, AR",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "four_state",
+  slug: 3916,
+  label: "Four State",
+  loc: "Exeter, MO",
+  species: "cattle",
+  tier: "tradeable"
+}, {
+  group: "ok_cattle_summary",
+  slug: 1831,
+  label: "Oklahoma Summary",
+  loc: "OK",
+  species: "cattle",
+  tier: "context"
+},
+// sheep / goat tradeable barns (shared reports; species split per-row)
+{
+  group: "pawnee",
+  slug: 1826,
+  label: "Pawnee",
+  loc: "Pawnee, OK",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "diamond",
+  slug: 1805,
+  label: "Diamond (TS White)",
+  loc: "Diamond, MO",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "norwood",
+  slug: 1806,
+  label: "Norwood",
+  loc: "Norwood, MO",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "buffalo",
+  slug: 1804,
+  label: "Buffalo",
+  loc: "Buffalo, MO",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "salem",
+  slug: 3659,
+  label: "Salem",
+  loc: "Salem, AR",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "mo_sheep_goat_summary",
+  slug: 1833,
+  label: "Missouri Summary",
+  loc: "MO",
+  species: "sheep_goat",
+  tier: "context"
+}];
+
+// species tabs map to a row-level filter, since sheep/goat share one report
+const SPECIES = [{
+  key: "cattle",
+  label: "Cattle",
+  rowSpecies: ["cattle"]
+}, {
+  key: "sheep",
+  label: "Sheep",
+  rowSpecies: ["sheep"]
+}, {
+  key: "goat",
+  label: "Goats",
+  rowSpecies: ["goat"]
+}];
+// which market groups carry a given species' rows
+function marketsForSpecies(sp) {
+  const grp = sp === "cattle" ? "cattle" : "sheep_goat";
+  return MARKETS.filter(m => m.species === grp);
+}
+// default comparison barn set per species
+const DEFAULT_COMPARE = {
+  cattle: ["tulsa", "joplin", "mcalester", "okc_west", "okc_national"],
+  sheep: ["pawnee", "diamond", "norwood", "salem"],
+  goat: ["pawnee", "diamond", "norwood", "salem"]
+};
+const DATA_BASES = ["data/", "https://raw.githubusercontent.com/odellnoah-svg/livestock-market-analyzer/main/data/"];
+const CURRENT_YEAR = 2026;
+
+// distinct, legible series colors (up to 8)
+const SERIES_COLORS = ["#c26a2b", "#3f7d8c", "#7a9a3e", "#9a5a8c", "#b8912a", "#5a7b9a", "#8a5a3a", "#4a8a6a"];
+
+/* ---------- helpers ---------- */
+function isoWeek(dateStr) {
+  const [m, d, y] = dateStr.split("/").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  const day = dt.getUTCDay() || 7;
+  dt.setUTCDate(dt.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(dt.getUTCFullYear(), 0, 1));
+  const wk = Math.ceil(((dt - yearStart) / 86400000 + 1) / 7);
+  return {
+    year: dt.getUTCFullYear(),
+    week: wk
+  };
+}
+function parseDate(s) {
+  const [m, d, y] = s.split("/").map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+const wkKey = (y, w) => y * 100 + w;
+const fmt$ = v => v == null ? "—" : v.toLocaleString("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
+function wtBreak(r) {
+  if (r.wt_break_lo != null) return r.wt_break_lo;
+  if (r.wt_avg) return Math.floor(r.wt_avg / 50) * 50;
+  return null;
+}
+async function fetchJSON(path) {
+  let lastErr;
+  for (const base of DATA_BASES) {
+    try {
+      const r = await fetch(base + path);
+      if (r.ok) return await r.json();
+      lastErr = new Error(r.status + " " + path);
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr;
+}
+
+/* ---------- shared multi-group loader ---------- */
+function useMarketData(groups) {
+  const [cache, setCache] = useState({}); // group -> rows
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
+  const manifestRef = useRef(null);
+  useEffect(() => {
+    const need = groups.filter(g => g && !cache[g]);
+    if (!need.length) return;
+    let dead = false;
+    (async () => {
+      try {
+        setError(null);
+        if (!manifestRef.current) manifestRef.current = await fetchJSON("index.json");
+        const manifest = manifestRef.current;
+        for (const g of need) {
+          const files = manifest.files.filter(f => f.file.split("/")[1] === g);
+          const rows = [];
+          for (let i = 0; i < files.length; i++) {
+            if (dead) return;
+            setLoading({
+              group: g,
+              done: i,
+              total: files.length
+            });
+            const part = await fetchJSON(files[i].file.replace(/^data\//, ""));
+            rows.push(...part);
+          }
+          if (dead) return;
+          setCache(c => ({
+            ...c,
+            [g]: rows
+          }));
+        }
+        if (!dead) setLoading(null);
+      } catch (e) {
+        if (!dead) {
+          setError(String(e));
+          setLoading(null);
+        }
+      }
+    })();
+    return () => {
+      dead = true;
+    };
+  }, [groups.join(",")]);
+  return {
+    cache,
+    loading,
+    error
+  };
+}
+
+/* ---------- seasonal index math (unchanged, carried forward) ---------- */
+function weeklySeries(rows, filt) {
+  const acc = new Map();
+  for (const r of rows) {
+    if (!filt(r)) continue;
+    const {
+      year,
+      week
+    } = isoWeek(r.date);
+    const k = wkKey(year, week);
+    const a = acc.get(k) || [0, 0];
+    a[0] += r.price_avg * r.head;
+    a[1] += r.head;
+    acc.set(k, a);
+  }
+  const out = [];
+  for (const [k, [s, h]] of acc) if (h > 0) out.push({
+    k,
+    year: Math.floor(k / 100),
+    week: k % 100,
+    price: s / h,
+    head: h
+  });
+  out.sort((a, b) => a.k - b.k);
+  return out;
+}
+function seasonalIndex(series, lookback) {
+  const minYear = CURRENT_YEAR - lookback;
+  const yearWeeks = new Map();
+  for (const p of series) if (p.year < CURRENT_YEAR && p.year >= minYear) yearWeeks.set(p.year, (yearWeeks.get(p.year) || 0) + 1);
+  const cadence = [...yearWeeks.values()].sort((a, b) => a - b);
+  const medianWeeks = cadence.length ? cadence[Math.floor(cadence.length / 2)] : 0;
+  const minWindow = Math.max(8, Math.round(medianWeeks * 0.6));
+  const ratios = [];
+  const n = series.length;
+  const serial = p => p.year * 52 + p.week;
+  for (let i = 0; i < n; i++) {
+    const p = series[i];
+    if (p.year >= CURRENT_YEAR || p.year < minYear) continue;
+    const lo = serial(p) - 26,
+      hi = serial(p) + 26;
+    let sum = 0,
+      cnt = 0,
+      clippedLo = true,
+      clippedHi = true;
+    for (let j = 0; j < n; j++) {
+      const s = serial(series[j]);
+      if (s >= lo && s <= hi) {
+        sum += series[j].price;
+        cnt++;
+      }
+      if (s < lo) clippedLo = false;
+      if (s > hi) clippedHi = false;
+    }
+    if (cnt >= minWindow && !clippedLo && !clippedHi) ratios.push({
+      week: p.week,
+      ratio: p.price / (sum / cnt)
+    });
+  }
+  const byWeek = new Map();
+  for (const {
+    week,
+    ratio
+  } of ratios) {
+    const w = Math.min(week, 52);
+    if (!byWeek.has(w)) byWeek.set(w, []);
+    byWeek.get(w).push(ratio);
+  }
+  const idx = new Map();
+  for (const [w, arr] of byWeek) {
+    if (arr.length < 2) continue;
+    const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
+    const sd = arr.length > 1 ? Math.sqrt(arr.reduce((a, b) => a + (b - mean) ** 2, 0) / (arr.length - 1)) : 0;
+    idx.set(w, {
+      mean: 100 * mean,
+      sd: 100 * sd,
+      n: arr.length
+    });
+  }
+  const smooth = new Map();
+  for (let w = 1; w <= 52; w++) {
+    const nb = [w === 1 ? 52 : w - 1, w, w === 52 ? 1 : w + 1].map(x => idx.get(x)).filter(Boolean);
+    if (idx.has(w) && nb.length) smooth.set(w, {
+      ...idx.get(w),
+      mean: nb.reduce((a, b) => a + b.mean, 0) / nb.length
+    });
+  }
+  return smooth;
+}
+
+/* filter for seasonal view (grade filter optional) */
+function seasonalFilter(sel) {
+  return r => {
+    if (r.species !== sel.rowSpecies) return false;
+    if (r.commodity !== sel.commodity || r.cls !== sel.cls) return false;
+    if (r.basis !== "per_cwt" || !r.price_avg || !r.head) return false;
+    if (wtBreak(r) !== sel.wtLo) return false;
+    // M&L grade filter only applies to feeder cattle, which carry frame/muscle grades.
+    // Slaughter/cull cows and bulls are graded by dressing (frame/muscle = N/A), so the
+    // filter would wrongly exclude every one of them.
+    if (sel.gradeFilter && r.species === "cattle" && r.commodity === "Feeder Cattle") {
+      if (!(r.frame || "").startsWith("Medium and Large")) return false;
+      if (r.muscle !== "1" && r.muscle !== "1-2") return false;
+    }
+    return true;
+  };
+}
+
+/* ---------- comparison math ---------- */
+// grade matcher: "all" | "1" | "1-2" | "2" | "2-3"
+function gradeMatch(r, grade) {
+  if (grade === "all") return true;
+  return r.muscle === grade;
+}
+// recent price-by-weight curve for one barn+class+grade over the last `days`
+function barnWeightCurve(rows, sel, sinceDate) {
+  const byW = new Map(); // wtLo -> [sum p*h, h, sum wt*h]
+  for (const r of rows) {
+    if (r.species !== sel.rowSpecies || r.commodity !== sel.commodity || r.cls !== sel.cls) continue;
+    if (r.basis !== "per_cwt" || !r.price_avg || !r.head) continue;
+    if (!gradeMatch(r, sel.grade)) continue;
+    if (sinceDate && parseDate(r.date) < sinceDate) continue;
+    const w = wtBreak(r);
+    if (w == null) continue;
+    const a = byW.get(w) || [0, 0, 0];
+    a[0] += r.price_avg * r.head;
+    a[1] += r.head;
+    a[2] += (r.wt_avg || w + 25) * r.head;
+    byW.set(w, a);
+  }
+  return [...byW.entries()].filter(([, v]) => v[1] > 0).map(([w, v]) => ({
+    wt: w,
+    price: v[0] / v[1],
+    head: v[1],
+    avgWt: v[2] / v[1]
+  })).sort((a, b) => a.wt - b.wt);
+}
+
+/* ---------- seasonal chart (carried forward) ---------- */
+const MONTH_TICKS = [[1, "Jan"], [5, "Feb"], [9, "Mar"], [14, "Apr"], [18, "May"], [22, "Jun"], [27, "Jul"], [31, "Aug"], [36, "Sep"], [40, "Oct"], [44, "Nov"], [48, "Dec"]];
+function SeasonalChart({
+  index,
+  current,
+  width
+}) {
+  const W = width || 960,
+    H = 430;
+  const M = {
+    l: 58,
+    r: 66,
+    t: 18,
+    b: 34
+  };
+  const iw = W - M.l - M.r,
+    ih = H - M.t - M.b;
+  const x = w => M.l + (w - 1) / 51 * iw;
+  const idxVals = [...index.values()];
+  if (!idxVals.length) return /*#__PURE__*/React.createElement("div", {
+    className: "empty"
+  }, "Not enough history for this class and weight — try another selection.");
+  let iLo = Math.min(...idxVals.map(v => v.mean - v.sd)),
+    iHi = Math.max(...idxVals.map(v => v.mean + v.sd));
+  iLo = Math.floor(Math.min(iLo, 94) / 2) * 2 - 2;
+  iHi = Math.ceil(Math.max(iHi, 106) / 2) * 2 + 2;
+  const yI = v => M.t + ih - (v - iLo) / (iHi - iLo) * ih;
+  const curVals = current.map(c => c.price);
+  let pLo = curVals.length ? Math.min(...curVals) : 0,
+    pHi = curVals.length ? Math.max(...curVals) : 1;
+  const pad = (pHi - pLo) * 0.15 || 10;
+  pLo -= pad;
+  pHi += pad;
+  const yP = v => M.t + ih - (v - pLo) / (pHi - pLo) * ih;
+  const weeks = [...index.keys()].sort((a, b) => a - b);
+  const linePath = weeks.map((w, i) => `${i ? "L" : "M"}${x(w).toFixed(1)},${yI(index.get(w).mean).toFixed(1)}`).join("");
+  const bandTop = weeks.map((w, i) => `${i ? "L" : "M"}${x(w).toFixed(1)},${yI(index.get(w).mean + index.get(w).sd).toFixed(1)}`).join("");
+  const bandBot = [...weeks].reverse().map(w => `L${x(w).toFixed(1)},${yI(index.get(w).mean - index.get(w).sd).toFixed(1)}`).join("");
+  const curPath = current.map((c, i) => `${i ? "L" : "M"}${x(c.week).toFixed(1)},${yP(c.price).toFixed(1)}`).join("");
+  const last = current[current.length - 1];
+  const iTicks = [];
+  for (let v = Math.ceil(iLo / 4) * 4; v <= iHi; v += 4) iTicks.push(v);
+  const pTicks = [];
+  const pStep = Math.max(10, Math.round((pHi - pLo) / 5 / 10) * 10);
+  for (let v = Math.ceil(pLo / pStep) * pStep; v <= pHi; v += pStep) pTicks.push(v);
+  return /*#__PURE__*/React.createElement("svg", {
+    viewBox: `0 0 ${W} ${H}`,
+    className: "chart",
+    role: "img",
+    "aria-label": "Seasonal price index"
+  }, iTicks.map(v => /*#__PURE__*/React.createElement("g", {
+    key: "i" + v
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: M.l,
+    x2: W - M.r,
+    y1: yI(v),
+    y2: yI(v),
+    className: v === 100 ? "grid-100" : "grid"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: M.l - 8,
+    y: yI(v) + 4,
+    className: "tick tick-l"
+  }, v))), pTicks.map(v => /*#__PURE__*/React.createElement("text", {
+    key: "p" + v,
+    x: W - M.r + 8,
+    y: yP(v) + 4,
+    className: "tick tick-r"
+  }, v)), MONTH_TICKS.map(([w, lab]) => /*#__PURE__*/React.createElement("text", {
+    key: lab,
+    x: x(w),
+    y: H - 10,
+    className: "tick tick-x"
+  }, lab)), /*#__PURE__*/React.createElement("path", {
+    d: bandTop + bandBot + "Z",
+    className: "band"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: linePath,
+    className: "season-line"
+  }), current.length > 1 && /*#__PURE__*/React.createElement("path", {
+    d: curPath,
+    className: "cur-line"
+  }), last && /*#__PURE__*/React.createElement(EarTag, {
+    cx: x(last.week),
+    cy: yP(last.price),
+    label: "$" + Math.round(last.price)
+  }), /*#__PURE__*/React.createElement("text", {
+    x: M.l,
+    y: 12,
+    className: "axis-name"
+  }, "SEASONAL INDEX · 100 = TREND"), /*#__PURE__*/React.createElement("text", {
+    x: W - M.r + 8,
+    y: 12,
+    className: "axis-name axis-name-r"
+  }, CURRENT_YEAR, " $/CWT"));
+}
+function EarTag({
+  cx,
+  cy,
+  label
+}) {
+  const s = 0.82;
+  return /*#__PURE__*/React.createElement("g", {
+    className: "eartag",
+    transform: `translate(${cx},${cy}) scale(${s})`
+  }, /*#__PURE__*/React.createElement("path", {
+    className: "tag-body",
+    d: "M-11,8.9 C-11,3.8 -6,1.3 0,1.3 C6,1.3 11,3.8 11,8.9 L11,21.7 C11,28.1 18,29.4 24,31.9 C30,35.1 30,38.3 30,43.4 L30,66.4 C30,70.9 27,72.1 20,72.1 L-20,72.1 C-27,72.1 -30,70.9 -30,66.4 L-30,43.4 C-30,38.3 -30,35.1 -24,31.9 C-18,29.4 -11,28.1 -11,21.7 Z"
+  }), /*#__PURE__*/React.createElement("circle", {
+    className: "tag-hole",
+    cx: 0,
+    cy: 12.8,
+    r: 4.5
+  }), /*#__PURE__*/React.createElement("text", {
+    className: "tag-text",
+    x: 0,
+    y: 56
+  }, label));
+}
+
+/* ---------- comparison chart: price vs weight, one line per barn ---------- */
+function CompareChart({
+  series,
+  width,
+  selectedWt,
+  onSelectWeight
+}) {
+  const [hover, setHover] = useState(null); // {x, y, barn, wt, price, avgWt, head, color}
+  const W = width || 960,
+    H = 430;
+  const M = {
+    l: 56,
+    r: 20,
+    t: 20,
+    b: 44
+  };
+  const iw = W - M.l - M.r,
+    ih = H - M.t - M.b;
+  const all = series.flatMap(s => s.curve);
+  if (!all.length) return /*#__PURE__*/React.createElement("div", {
+    className: "empty"
+  }, "No sales for this selection at these barns — try a different class, grade, or widen the window.");
+  const wts = [...new Set(all.map(p => p.wt))].sort((a, b) => a - b);
+  const wMin = wts[0],
+    wMax = wts[wts.length - 1];
+  const x = w => M.l + (wMax === wMin ? 0.5 : (w - wMin) / (wMax - wMin)) * iw;
+  let pLo = Math.min(...all.map(p => p.price)),
+    pHi = Math.max(...all.map(p => p.price));
+  const pad = (pHi - pLo) * 0.12 || 10;
+  pLo -= pad;
+  pHi += pad;
+  const y = v => M.t + ih - (v - pLo) / (pHi - pLo) * ih;
+  const pTicks = [];
+  const step = Math.max(10, Math.round((pHi - pLo) / 5 / 10) * 10);
+  for (let v = Math.ceil(pLo / step) * step; v <= pHi; v += step) pTicks.push(v);
+  const hitW = wts.length > 1 ? iw / (wts.length - 1) / 2 : iw / 2;
+  return /*#__PURE__*/React.createElement("svg", {
+    viewBox: `0 0 ${W} ${H}`,
+    className: "chart",
+    role: "img",
+    "aria-label": "Price by weight across markets"
+  }, pTicks.map(v => /*#__PURE__*/React.createElement("g", {
+    key: v
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: M.l,
+    x2: W - M.r,
+    y1: y(v),
+    y2: y(v),
+    className: "grid"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: M.l - 8,
+    y: y(v) + 4,
+    className: "tick tick-l"
+  }, v))), selectedWt != null && wts.includes(selectedWt) && /*#__PURE__*/React.createElement("line", {
+    x1: x(selectedWt),
+    x2: x(selectedWt),
+    y1: M.t,
+    y2: M.t + ih,
+    className: "wt-guide"
+  }), onSelectWeight && wts.map(w => /*#__PURE__*/React.createElement("rect", {
+    key: "hit" + w,
+    x: x(w) - hitW,
+    y: M.t,
+    width: hitW * 2,
+    height: ih,
+    className: "wt-hit",
+    onClick: () => onSelectWeight(w),
+    style: {
+      pointerEvents: "fill"
+    }
+  }, /*#__PURE__*/React.createElement("title", null, w, "–", w + 50, " lb — click to rank at this weight"))), wts.map(w => /*#__PURE__*/React.createElement("text", {
+    key: w,
+    x: x(w),
+    y: H - 22,
+    className: "tick tick-x" + (selectedWt === w ? " tick-sel" : "")
+  }, w)), /*#__PURE__*/React.createElement("text", {
+    x: M.l + iw / 2,
+    y: H - 6,
+    className: "axis-name",
+    textAnchor: "middle"
+  }, "WEIGHT BREAK (LB) · CLICK TO RANK"), /*#__PURE__*/React.createElement("text", {
+    x: M.l,
+    y: 12,
+    className: "axis-name"
+  }, "$/CWT · LAST WINDOW"), series.map(s => {
+    if (!s.curve.length) return null;
+    const d = s.curve.map((p, i) => `${i ? "L" : "M"}${x(p.wt).toFixed(1)},${y(p.price).toFixed(1)}`).join("");
+    return /*#__PURE__*/React.createElement("g", {
+      key: s.group
+    }, /*#__PURE__*/React.createElement("path", {
+      d: d,
+      className: "cmp-line",
+      style: {
+        stroke: s.color
+      }
+    }), s.curve.map(p => /*#__PURE__*/React.createElement("g", {
+      key: p.wt
+    }, /*#__PURE__*/React.createElement("circle", {
+      cx: x(p.wt),
+      cy: y(p.price),
+      r: selectedWt === p.wt ? 6 : 3.5,
+      className: selectedWt === p.wt ? "cmp-dot hi" : "cmp-dot",
+      style: {
+        fill: s.color
+      },
+      onClick: onSelectWeight ? () => onSelectWeight(p.wt) : undefined
+    }), /*#__PURE__*/React.createElement("circle", {
+      cx: x(p.wt),
+      cy: y(p.price),
+      r: 11,
+      className: "dot-halo",
+      onClick: onSelectWeight ? () => onSelectWeight(p.wt) : undefined,
+      onMouseEnter: () => setHover({
+        px: x(p.wt),
+        py: y(p.price),
+        barn: s.label,
+        color: s.color,
+        ...p
+      }),
+      onMouseLeave: () => setHover(null)
+    }))));
+  }), hover && /*#__PURE__*/React.createElement(ChartTip, {
+    hover: hover,
+    W: W
+  }));
+}
+function ChartTip({
+  hover,
+  W
+}) {
+  const boxW = 168,
+    boxH = 74,
+    gap = 12;
+  // flip to the left if too close to the right edge
+  const left = hover.px + boxW + gap > W;
+  const bx = left ? hover.px - boxW - gap : hover.px + gap;
+  const by = Math.max(4, hover.py - boxH / 2);
+  return /*#__PURE__*/React.createElement("g", {
+    className: "chart-tip",
+    pointerEvents: "none"
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: hover.px,
+    y1: hover.py,
+    x2: bx + (left ? boxW : 0),
+    y2: by + boxH / 2,
+    className: "tip-lead"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: bx,
+    y: by,
+    width: boxW,
+    height: boxH,
+    rx: "7",
+    className: "tip-box"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: bx,
+    y: by,
+    width: 5,
+    height: boxH,
+    rx: "2",
+    style: {
+      fill: hover.color
+    }
+  }), /*#__PURE__*/React.createElement("text", {
+    x: bx + 14,
+    y: by + 20,
+    className: "tip-barn"
+  }, hover.barn), /*#__PURE__*/React.createElement("text", {
+    x: bx + 14,
+    y: by + 40,
+    className: "tip-price"
+  }, "$", hover.price.toFixed(2), /*#__PURE__*/React.createElement("tspan", {
+    className: "tip-unit"
+  }, "/cwt")), /*#__PURE__*/React.createElement("text", {
+    x: bx + 14,
+    y: by + 59,
+    className: "tip-meta"
+  }, "avg ", Math.round(hover.avgWt), " lb · ", hover.head, " head"));
+}
+
+/* ---------- shared option discovery ---------- */
+// build commodity -> cls -> Set(wtLo) from loaded rows for a species
+function buildOptions(rowsByGroup, groups, rowSpecies) {
+  const map = new Map();
+  for (const g of groups) {
+    for (const r of rowsByGroup[g] || []) {
+      if (r.species !== rowSpecies || r.basis !== "per_cwt" || !r.price_avg || !r.head) continue;
+      const w = wtBreak(r);
+      if (w == null) continue;
+      if (!map.has(r.commodity)) map.set(r.commodity, new Map());
+      const cm = map.get(r.commodity);
+      if (!cm.has(r.cls)) cm.set(r.cls, new Map());
+      const wm = cm.get(r.cls);
+      let e = wm.get(w);
+      if (!e) {
+        e = {
+          head: 0,
+          weeks: new Set(),
+          years: new Set()
+        };
+        wm.set(w, e);
+      }
+      e.head += r.head;
+      e.weeks.add(r.date);
+      e.years.add(r.date.slice(-4));
+    }
+  }
+  return map;
+}
+// weights with enough history to produce a seasonal index (vs a stray sale or two)
+function indexableWeights(wm) {
+  if (!wm) return [];
+  return [...wm.entries()].filter(([, e]) => e.weeks.size >= 12 && e.years.size >= 2).map(([w]) => w).sort((a, b) => a - b);
+}
+function pickDefault(opts) {
+  if (!opts || !opts.size) return {};
+  const sumWm = wm => [...wm.values()].reduce((a, e) => a + e.head, 0);
+  const sumCm = cm => [...cm.values()].reduce((a, wm) => a + sumWm(wm), 0);
+  const commodity = [...opts.keys()].sort((a, b) => sumCm(opts.get(b)) - sumCm(opts.get(a)))[0];
+  const cm = opts.get(commodity);
+  const cls = [...cm.keys()].sort((a, b) => sumWm(cm.get(b)) - sumWm(cm.get(a)))[0];
+  const wm = cm.get(cls);
+  const wtLo = [...wm.entries()].sort((a, b) => b[1].head - a[1].head)[0][0];
+  return {
+    commodity,
+    cls,
+    wtLo
+  };
+}
+
+/* ---------- COMPARISON VIEW ---------- */
+function CompareView({
+  species
+}) {
+  const speciesDef = SPECIES.find(s => s.key === species);
+  const rowSpecies = speciesDef.rowSpecies[0];
+  const allBarns = marketsForSpecies(species).filter(m => m.tier === "tradeable");
+  const [selected, setSelected] = useState(() => DEFAULT_COMPARE[species] || allBarns.slice(0, 4).map(b => b.group));
+  const [commodity, setCommodity] = useState(null);
+  const [cls, setCls] = useState(null);
+  const [grade, setGrade] = useState("all");
+  const [days, setDays] = useState(60);
+  const [highlightWt, setHighlightWt] = useState(null);
+
+  // reset selection when species changes
+  useEffect(() => {
+    setSelected(DEFAULT_COMPARE[species] || allBarns.slice(0, 4).map(b => b.group));
+    setCommodity(null);
+    setCls(null);
+  }, [species]);
+  const {
+    cache,
+    loading,
+    error
+  } = useMarketData(selected);
+  const allLoaded = selected.every(g => cache[g]);
+  const opts = useMemo(() => allLoaded ? buildOptions(cache, selected, rowSpecies) : null, [cache, selected, rowSpecies, allLoaded]);
+  useEffect(() => {
+    if (!opts || !opts.size) return;
+    let c = commodity,
+      k = cls;
+    if (!c || !opts.has(c)) {
+      const d = pickDefault(opts);
+      c = d.commodity;
+      k = d.cls;
+    } else if (!k || !opts.get(c).has(k)) k = [...opts.get(c).keys()][0];
+    if (c !== commodity) setCommodity(c);
+    if (k !== cls) setCls(k);
+  }, [opts]);
+
+  // grades available for the current commodity+cls across selected barns
+  const grades = useMemo(() => {
+    if (!allLoaded || !commodity || !cls) return ["all"];
+    const set = new Set();
+    for (const g of selected) for (const r of cache[g] || []) if (r.species === rowSpecies && r.commodity === commodity && r.cls === cls && r.muscle) set.add(r.muscle);
+    const order = ["1", "1-2", "2", "2-3", "3", "4"];
+    return ["all", ...order.filter(x => set.has(x))];
+  }, [cache, selected, commodity, cls, allLoaded, rowSpecies]);
+  const sinceDate = useMemo(() => {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() - days);
+    return d;
+  }, [days]);
+  const series = useMemo(() => {
+    if (!allLoaded || !commodity || !cls) return [];
+    return selected.map((g, i) => {
+      const barn = MARKETS.find(m => m.group === g);
+      const curve = barnWeightCurve(cache[g] || [], {
+        rowSpecies,
+        commodity,
+        cls,
+        grade
+      }, sinceDate);
+      return {
+        group: g,
+        label: barn.label,
+        color: SERIES_COLORS[i % SERIES_COLORS.length],
+        curve
+      };
+    });
+  }, [cache, selected, commodity, cls, grade, sinceDate, allLoaded, rowSpecies]);
+
+  // ranking table at the highlighted (or default best-populated) weight
+  const rankWt = useMemo(() => {
+    if (highlightWt != null) return highlightWt;
+    // default to the weight most barns report
+    const cnt = new Map();
+    for (const s of series) for (const p of s.curve) cnt.set(p.wt, (cnt.get(p.wt) || 0) + 1);
+    let best = null,
+      bestN = -1;
+    for (const [w, n] of cnt) if (n > bestN || n === bestN && w < best) {
+      best = w;
+      bestN = n;
+    }
+    return best;
+  }, [series, highlightWt]);
+  const ranking = useMemo(() => {
+    if (rankWt == null) return [];
+    return series.map(s => {
+      const p = s.curve.find(x => x.wt === rankWt);
+      return p ? {
+        label: s.label,
+        color: s.color,
+        ...p
+      } : null;
+    }).filter(Boolean).sort((a, b) => b.price - a.price);
+  }, [series, rankWt]);
+  const toggleBarn = g => setSelected(sel => sel.includes(g) ? sel.filter(x => x !== g) : [...sel, g]);
+  const wtOptions = useMemo(() => [...new Set(series.flatMap(s => s.curve.map(p => p.wt)))].sort((a, b) => a - b), [series]);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "controls"
+  }, /*#__PURE__*/React.createElement("label", null, "Class", /*#__PURE__*/React.createElement("select", {
+    value: cls || "",
+    onChange: e => setCls(e.target.value),
+    disabled: !opts || !commodity
+  }, opts && commodity && opts.has(commodity) && [...opts.get(commodity).keys()].map(k => /*#__PURE__*/React.createElement("option", {
+    key: k,
+    value: k
+  }, k)))), /*#__PURE__*/React.createElement("label", null, "Grade", /*#__PURE__*/React.createElement("select", {
+    value: grade,
+    onChange: e => setGrade(e.target.value)
+  }, grades.map(gr => /*#__PURE__*/React.createElement("option", {
+    key: gr,
+    value: gr
+  }, gr === "all" ? "All grades" : "#" + gr)))), /*#__PURE__*/React.createElement("label", null, "At weight", /*#__PURE__*/React.createElement("select", {
+    value: rankWt ?? "",
+    onChange: e => setHighlightWt(Number(e.target.value)),
+    disabled: !wtOptions.length
+  }, wtOptions.map(w => /*#__PURE__*/React.createElement("option", {
+    key: w,
+    value: w
+  }, w, "–", w + 50, " lb")))), /*#__PURE__*/React.createElement("label", null, "Window", /*#__PURE__*/React.createElement("select", {
+    value: days,
+    onChange: e => setDays(Number(e.target.value))
+  }, /*#__PURE__*/React.createElement("option", {
+    value: 7
+  }, "7 days"), /*#__PURE__*/React.createElement("option", {
+    value: 14
+  }, "14 days"), /*#__PURE__*/React.createElement("option", {
+    value: 30
+  }, "30 days"), /*#__PURE__*/React.createElement("option", {
+    value: 60
+  }, "60 days"), /*#__PURE__*/React.createElement("option", {
+    value: 90
+  }, "90 days")))), /*#__PURE__*/React.createElement("div", {
+    className: "barn-chips"
+  }, allBarns.map((b, i) => {
+    const on = selected.includes(b.group);
+    const ci = selected.indexOf(b.group);
+    return /*#__PURE__*/React.createElement("button", {
+      key: b.group,
+      className: "chip" + (on ? " on" : ""),
+      style: on ? {
+        borderColor: SERIES_COLORS[ci % SERIES_COLORS.length],
+        color: SERIES_COLORS[ci % SERIES_COLORS.length]
+      } : {},
+      onClick: () => toggleBarn(b.group)
+    }, on && /*#__PURE__*/React.createElement("span", {
+      className: "chip-dot",
+      style: {
+        background: SERIES_COLORS[ci % SERIES_COLORS.length]
+      }
+    }), b.label);
+  })), loading && /*#__PURE__*/React.createElement("div", {
+    className: "loading"
+  }, "Loading ", MARKETS.find(m => m.group === loading.group)?.label, " — file ", loading.done + 1, " of ", loading.total, "…"), error && /*#__PURE__*/React.createElement("div", {
+    className: "error"
+  }, "Couldn't load market data (", error, "). Check the network and reload."), allLoaded && !loading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CompareChart, {
+    series: series,
+    selectedWt: rankWt,
+    onSelectWeight: setHighlightWt
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "legend"
+  }, series.filter(s => s.curve.length).map(s => /*#__PURE__*/React.createElement("span", {
+    key: s.group
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "sw",
+    style: {
+      background: s.color,
+      height: 4
+    }
+  }), s.label))), rankWt != null && ranking.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "rank"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rank-head"
+  }, "Best price for ", grade === "all" ? "" : "#" + grade + " ", cls, " at ", rankWt, "–", rankWt + 50, " lb"), /*#__PURE__*/React.createElement("table", {
+    className: "rank-tbl"
+  }, /*#__PURE__*/React.createElement("tbody", null, ranking.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: r.label,
+    className: i === 0 ? "top" : ""
+  }, /*#__PURE__*/React.createElement("td", {
+    className: "rk"
+  }, i + 1), /*#__PURE__*/React.createElement("td", {
+    className: "bn"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "chip-dot",
+    style: {
+      background: r.color
+    }
+  }), r.label), /*#__PURE__*/React.createElement("td", {
+    className: "pr"
+  }, "$", fmt$(r.price), /*#__PURE__*/React.createElement("span", {
+    className: "unit"
+  }, "/cwt")), /*#__PURE__*/React.createElement("td", {
+    className: "hd"
+  }, r.head, " head"), i === 0 && /*#__PURE__*/React.createElement("td", {
+    className: "delta"
+  }, "best"), i > 0 && /*#__PURE__*/React.createElement("td", {
+    className: "delta"
+  }, "−$", (ranking[0].price - r.price).toFixed(0))))))), /*#__PURE__*/React.createElement("div", {
+    className: "foot"
+  }, "Each line is one barn's recent price at each weight — the slope is its rollback. Where lines cross, the best barn changes with weight. Relationships only; no forecasts. Source: USDA AMS via MARS.")));
+}
+
+/* ---------- SEASONAL VIEW ---------- */
+function SeasonalView({
+  species
+}) {
+  const rowSpecies = SPECIES.find(s => s.key === species).rowSpecies[0];
+  const barns = marketsForSpecies(species);
+  const [group, setGroup] = useState(barns[0].group);
+  const [lookback, setLookback] = useState(5);
+  const [gradeFilter, setGradeFilter] = useState(true);
+  const [commodity, setCommodity] = useState(null);
+  const [cls, setCls] = useState(null);
+  const [wtLo, setWtLo] = useState(null);
+  useEffect(() => {
+    const b = marketsForSpecies(species);
+    setGroup(b[0].group);
+    setCommodity(null);
+    setCls(null);
+    setWtLo(null);
+  }, [species]);
+  const {
+    cache,
+    loading,
+    error
+  } = useMarketData([group]);
+  const rows = cache[group];
+  const market = MARKETS.find(m => m.group === group);
+  const options = useMemo(() => rows ? buildOptions(cache, [group], rowSpecies) : null, [rows, group, rowSpecies]);
+  // choose the best indexable weight for a class (falls back to all if none qualify)
+  const bestWeight = wm => {
+    const idxable = indexableWeights(wm);
+    const pool = idxable.length ? idxable : [...wm.keys()];
+    return pool.map(w => [w, wm.get(w).head]).sort((a, b) => b[1] - a[1])[0][0];
+  };
+  useEffect(() => {
+    if (!options || !options.size) return;
+    let c = commodity,
+      k = cls,
+      w = wtLo;
+    if (!c || !options.has(c)) {
+      const d = pickDefault(options);
+      c = d.commodity;
+      k = d.cls;
+      w = bestWeight(options.get(c).get(k));
+    } else {
+      const cm = options.get(c);
+      if (!k || !cm.has(k)) {
+        k = [...cm.keys()][0];
+        w = null;
+      }
+      const wm = cm.get(k);
+      if (w == null || !wm.has(w)) w = bestWeight(wm);
+    }
+    if (c !== commodity) setCommodity(c);
+    if (k !== cls) setCls(k);
+    if (w !== wtLo) setWtLo(w);
+  }, [options]);
+  const sel = {
+    rowSpecies,
+    commodity,
+    cls,
+    wtLo,
+    gradeFilter
+  };
+  const ready = rows && commodity && cls && wtLo != null;
+  const series = useMemo(() => ready ? weeklySeries(rows, seasonalFilter(sel)) : [], [rows, commodity, cls, wtLo, gradeFilter]);
+  const index = useMemo(() => ready ? seasonalIndex(series, lookback) : new Map(), [series, lookback]);
+  const current = useMemo(() => series.filter(p => p.year === CURRENT_YEAR), [series]);
+  const stats = useMemo(() => {
+    if (!index.size) return null;
+    const ws = [...index.entries()];
+    const hi = ws.reduce((a, b) => b[1].mean > a[1].mean ? b : a);
+    const lo = ws.reduce((a, b) => b[1].mean < a[1].mean ? b : a);
+    const last = current[current.length - 1];
+    const nowIdx = last ? index.get(Math.min(last.week, 52)) : null;
+    let lowVol = false;
+    if (last) {
+      const heads = series.filter(p => p.year < CURRENT_YEAR).map(p => p.head).sort((a, b) => a - b);
+      const p25 = heads.length ? heads[Math.floor(heads.length / 4)] : 0;
+      lowVol = last.head < p25;
+    }
+    return {
+      hi,
+      lo,
+      last,
+      nowIdx,
+      lowVol
+    };
+  }, [index, current, series]);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "controls"
+  }, /*#__PURE__*/React.createElement("label", null, "Market", /*#__PURE__*/React.createElement("select", {
+    value: group,
+    onChange: e => setGroup(e.target.value)
+  }, barns.map(m => /*#__PURE__*/React.createElement("option", {
+    key: m.group,
+    value: m.group
+  }, m.label, m.tier === "context" ? " (summary)" : "")))), /*#__PURE__*/React.createElement("label", null, "Type", /*#__PURE__*/React.createElement("select", {
+    value: commodity || "",
+    onChange: e => {
+      setCommodity(e.target.value);
+      setCls(null);
+      setWtLo(null);
+    },
+    disabled: !options
+  }, options && [...options.keys()].map(c => /*#__PURE__*/React.createElement("option", {
+    key: c,
+    value: c
+  }, c)))), /*#__PURE__*/React.createElement("label", null, "Class", /*#__PURE__*/React.createElement("select", {
+    value: cls || "",
+    onChange: e => {
+      setCls(e.target.value);
+      setWtLo(null);
+    },
+    disabled: !options || !commodity
+  }, options && commodity && options.has(commodity) && [...options.get(commodity).keys()].map(k => /*#__PURE__*/React.createElement("option", {
+    key: k,
+    value: k
+  }, k)))), /*#__PURE__*/React.createElement("label", null, "Weight", /*#__PURE__*/React.createElement("select", {
+    value: wtLo ?? "",
+    onChange: e => setWtLo(Number(e.target.value)),
+    disabled: !options || !cls
+  }, options && commodity && cls && options.get(commodity) && options.get(commodity).has(cls) && (() => {
+    const wm = options.get(commodity).get(cls);
+    const idx = indexableWeights(wm);
+    const list = idx.length ? idx : [...wm.keys()].sort((a, b) => a - b);
+    return list.map(w => /*#__PURE__*/React.createElement("option", {
+      key: w,
+      value: w
+    }, w, "–", w + 50, " lb"));
+  })())), /*#__PURE__*/React.createElement("label", null, "Lookback", /*#__PURE__*/React.createElement("select", {
+    value: lookback,
+    onChange: e => setLookback(Number(e.target.value))
+  }, /*#__PURE__*/React.createElement("option", {
+    value: 3
+  }, "3 years"), /*#__PURE__*/React.createElement("option", {
+    value: 5
+  }, "5 years"))), species === "cattle" && commodity === "Feeder Cattle" && /*#__PURE__*/React.createElement("label", {
+    className: "chk"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: gradeFilter,
+    onChange: e => setGradeFilter(e.target.checked)
+  }), "M&L 1 / 1-2 only", /*#__PURE__*/React.createElement("span", {
+    className: "tip",
+    tabIndex: 0,
+    "data-tip": "Limits the index to Medium & Large frame, muscle grade 1 and 1-2 feeder cattle — the standard kind that price together. Keeps the seasonal index measuring market movement, not week-to-week grade mix. Uncheck to include all grades (more head, more noise)."
+  }, "ⓘ"))), loading && /*#__PURE__*/React.createElement("div", {
+    className: "loading"
+  }, "Loading ", market.label, " — file ", loading.done + 1, " of ", loading.total, "…"), error && /*#__PURE__*/React.createElement("div", {
+    className: "error"
+  }, "Couldn't load market data (", error, "). Check the network and reload."), ready && !loading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SeasonalChart, {
+    index: index,
+    current: current
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "legend"
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+    className: "sw sw-line"
+  }), "seasonal index"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+    className: "sw sw-band"
+  }), "±1 sd across years"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+    className: "sw sw-cur"
+  }), CURRENT_YEAR, " price (right axis)")), stats && /*#__PURE__*/React.createElement("div", {
+    className: "stats"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat-label"
+  }, "Latest sale"), /*#__PURE__*/React.createElement("div", {
+    className: "stat-val"
+  }, "$", fmt$(stats.last && stats.last.price), /*#__PURE__*/React.createElement("span", {
+    className: "unit"
+  }, "/cwt")), /*#__PURE__*/React.createElement("div", {
+    className: "stat-note"
+  }, "wk ", stats.last ? stats.last.week : "—", " · ", stats.last ? stats.last.head : 0, " head", stats.lowVol && /*#__PURE__*/React.createElement("span", {
+    className: "badge badge-lowvol"
+  }, "Low Volume"))), /*#__PURE__*/React.createElement("div", {
+    className: "stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat-label"
+  }, "Seasonal position now"), /*#__PURE__*/React.createElement("div", {
+    className: "stat-val"
+  }, stats.nowIdx ? stats.nowIdx.mean.toFixed(1) : "—", /*#__PURE__*/React.createElement("span", {
+    className: "unit idx"
+  }, "idx")), /*#__PURE__*/React.createElement("div", {
+    className: "stat-note"
+  }, "100 = seasonal normal · ", stats.nowIdx ? stats.nowIdx.n : 0, " yrs")), /*#__PURE__*/React.createElement("div", {
+    className: "stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat-label"
+  }, "Seasonal high (index)"), /*#__PURE__*/React.createElement("div", {
+    className: "stat-val hi"
+  }, stats.hi[1].mean.toFixed(1), /*#__PURE__*/React.createElement("span", {
+    className: "unit idx"
+  }, "idx")), /*#__PURE__*/React.createElement("div", {
+    className: "stat-note"
+  }, "week ", stats.hi[0], " · ", weekMonth(stats.hi[0]))), /*#__PURE__*/React.createElement("div", {
+    className: "stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat-label"
+  }, "Seasonal low (index)"), /*#__PURE__*/React.createElement("div", {
+    className: "stat-val lo"
+  }, stats.lo[1].mean.toFixed(1), /*#__PURE__*/React.createElement("span", {
+    className: "unit idx"
+  }, "idx")), /*#__PURE__*/React.createElement("div", {
+    className: "stat-note"
+  }, "week ", stats.lo[0], " · ", weekMonth(stats.lo[0])))), /*#__PURE__*/React.createElement("div", {
+    className: "foot"
+  }, "Relationships and seasonal position only — no forecasts (Principle 4: deal with today). Source: USDA AMS via MARS · ", market.tier === "context" ? "regional summary" : "tradeable barn", ".")));
+}
+function weekMonth(w) {
+  const d = new Date(Date.UTC(2025, 0, 1 + (w - 1) * 7 + 3));
+  return d.toLocaleString("en-US", {
+    month: "long",
+    timeZone: "UTC"
+  });
+}
+
+/* ---------- EXPLORE: multi-series price over time ---------- */
+// weekly weighted-avg price time series for one fully-specified series, over all data
+function timeSeries(rows, sel) {
+  const acc = new Map(); // wkKey -> [sum p*h, h]
+  for (const r of rows) {
+    if (r.species !== sel.rowSpecies || r.commodity !== sel.commodity || r.cls !== sel.cls) continue;
+    if (r.basis !== sel.basis || !r.price_avg || !r.head) continue;
+    if (sel.grade !== "all" && r.muscle !== sel.grade) continue;
+    if (sel.wtLo != null && wtBreak(r) !== sel.wtLo) continue;
+    const {
+      year,
+      week
+    } = isoWeek(r.date);
+    const k = wkKey(year, week);
+    const a = acc.get(k) || [0, 0];
+    a[0] += r.price_avg * r.head;
+    a[1] += r.head;
+    acc.set(k, a);
+  }
+  const out = [];
+  for (const [k, [s, h]] of acc) if (h > 0) {
+    const year = Math.floor(k / 100),
+      week = k % 100;
+    out.push({
+      t: Date.UTC(year, 0, 1 + (week - 1) * 7),
+      price: s / h,
+      head: h
+    });
+  }
+  out.sort((a, b) => a.t - b.t);
+  return out;
+}
+function smooth4(series) {
+  return series.map((p, i) => {
+    const win = series.slice(Math.max(0, i - 3), i + 1);
+    return {
+      ...p,
+      price: win.reduce((a, b) => a + b.price, 0) / win.length
+    };
+  });
+}
+function indexToStart(series) {
+  if (!series.length) return series;
+  const base = series[0].price;
+  return series.map(p => ({
+    ...p,
+    price: p.price / base * 100
+  }));
+}
+function ExploreChart({
+  series,
+  indexed,
+  width
+}) {
+  const W = width || 960,
+    H = 440;
+  const M = {
+    l: 62,
+    r: 18,
+    t: 18,
+    b: 40
+  };
+  const iw = W - M.l - M.r,
+    ih = H - M.t - M.b;
+  const all = series.flatMap(s => s.points);
+  if (!all.length) return /*#__PURE__*/React.createElement("div", {
+    className: "empty"
+  }, "Add a series to plot — pick market, class, grade, and weight, then Add.");
+  const tMin = Math.min(...all.map(p => p.t)),
+    tMax = Math.max(...all.map(p => p.t));
+  const x = t => M.l + (tMax === tMin ? 0.5 : (t - tMin) / (tMax - tMin)) * iw;
+  let pLo = Math.min(...all.map(p => p.price)),
+    pHi = Math.max(...all.map(p => p.price));
+  const pad = (pHi - pLo) * 0.1 || 5;
+  pLo -= pad;
+  pHi += pad;
+  const y = v => M.t + ih - (v - pLo) / (pHi - pLo) * ih;
+  const pTicks = [];
+  const step = niceStep((pHi - pLo) / 5);
+  for (let v = Math.ceil(pLo / step) * step; v <= pHi; v += step) pTicks.push(v);
+  // year ticks
+  const yrTicks = [];
+  const y0 = new Date(tMin).getUTCFullYear(),
+    y1 = new Date(tMax).getUTCFullYear();
+  for (let yr = y0; yr <= y1 + 1; yr++) {
+    const t = Date.UTC(yr, 0, 1);
+    if (t >= tMin - 3e10 && t <= tMax + 3e10) yrTicks.push({
+      t,
+      yr
+    });
+  }
+  return /*#__PURE__*/React.createElement("svg", {
+    viewBox: `0 0 ${W} ${H}`,
+    className: "chart",
+    role: "img",
+    "aria-label": "Price over time"
+  }, pTicks.map(v => /*#__PURE__*/React.createElement("g", {
+    key: v
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: M.l,
+    x2: W - M.r,
+    y1: y(v),
+    y2: y(v),
+    className: indexed && Math.round(v) === 100 ? "grid-100" : "grid"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: M.l - 8,
+    y: y(v) + 4,
+    className: "tick tick-l"
+  }, indexed ? v.toFixed(0) : v))), yrTicks.map(({
+    t,
+    yr
+  }) => /*#__PURE__*/React.createElement("g", {
+    key: yr
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: x(t),
+    x2: x(t),
+    y1: M.t,
+    y2: M.t + ih,
+    className: "grid grid-faint"
+  }), /*#__PURE__*/React.createElement("text", {
+    x: x(t),
+    y: H - 20,
+    className: "tick tick-x"
+  }, yr))), /*#__PURE__*/React.createElement("text", {
+    x: M.l,
+    y: 12,
+    className: "axis-name"
+  }, indexed ? "INDEXED · START = 100" : "$/" + (series[0]?.basisLabel || "CWT")), series.map(s => {
+    if (!s.points.length) return null;
+    const d = s.points.map((p, i) => `${i ? "L" : "M"}${x(p.t).toFixed(1)},${y(p.price).toFixed(1)}`).join("");
+    return /*#__PURE__*/React.createElement("path", {
+      key: s.id,
+      d: d,
+      className: "cmp-line",
+      style: {
+        stroke: s.color
+      }
+    });
+  }));
+}
+function niceStep(raw) {
+  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  const n = raw / pow;
+  return (n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10) * pow;
+}
+function ExploreView({
+  species
+}) {
+  const rowSpecies = SPECIES.find(s => s.key === species).rowSpecies[0];
+  const allBarns = marketsForSpecies(species);
+  const [basis, setBasis] = useState("per_cwt");
+  const [indexed, setIndexed] = useState(false);
+  const [smoothed, setSmoothed] = useState(false);
+  const [picker, setPicker] = useState({
+    group: allBarns[0].group,
+    commodity: null,
+    cls: null,
+    grade: "all",
+    wtLo: null
+  });
+  const [added, setAdded] = useState([]); // list of {id, group, commodity, cls, grade, wtLo, color, label}
+  const nextColor = useRef(0);
+  useEffect(() => {
+    setAdded([]);
+    setPicker({
+      group: marketsForSpecies(species)[0].group,
+      commodity: null,
+      cls: null,
+      grade: "all",
+      wtLo: null
+    });
+  }, [species]);
+
+  // load the picker's current group + all added groups
+  const neededGroups = useMemo(() => [...new Set([picker.group, ...added.map(a => a.group)])], [picker.group, added]);
+  const {
+    cache,
+    loading,
+    error
+  } = useMarketData(neededGroups);
+
+  // options for the picker (respecting basis)
+  const pickerRows = cache[picker.group];
+  const opts = useMemo(() => {
+    if (!pickerRows) return null;
+    const m = new Map();
+    for (const r of pickerRows) {
+      if (r.species !== rowSpecies || r.basis !== basis || !r.price_avg || !r.head) continue;
+      const w = wtBreak(r);
+      if (!m.has(r.commodity)) m.set(r.commodity, new Map());
+      const cm = m.get(r.commodity);
+      if (!cm.has(r.cls)) cm.set(r.cls, new Set());
+      if (w != null) cm.get(r.cls).add(w);
+    }
+    return m;
+  }, [pickerRows, rowSpecies, basis]);
+  useEffect(() => {
+    if (!opts || !opts.size) return;
+    let {
+      commodity,
+      cls,
+      wtLo
+    } = picker;
+    if (!commodity || !opts.has(commodity)) {
+      commodity = [...opts.keys()][0];
+      cls = null;
+      wtLo = null;
+    }
+    const cm = opts.get(commodity);
+    if (!cls || !cm.has(cls)) {
+      cls = [...cm.keys()][0];
+      wtLo = null;
+    }
+    const ws = [...cm.get(cls)].sort((a, b) => a - b);
+    if (wtLo == null || !cm.get(cls).has(wtLo)) wtLo = ws[0] ?? null;
+    if (commodity !== picker.commodity || cls !== picker.cls || wtLo !== picker.wtLo) setPicker(p => ({
+      ...p,
+      commodity,
+      cls,
+      wtLo
+    }));
+  }, [opts]);
+  const grades = useMemo(() => {
+    if (!pickerRows || !picker.commodity || !picker.cls) return ["all"];
+    const set = new Set();
+    for (const r of pickerRows) if (r.species === rowSpecies && r.commodity === picker.commodity && r.cls === picker.cls && r.muscle) set.add(r.muscle);
+    return ["all", ...["1", "1-2", "2", "2-3", "3", "4"].filter(x => set.has(x))];
+  }, [pickerRows, picker.commodity, picker.cls, rowSpecies]);
+  const addSeries = () => {
+    const barn = MARKETS.find(m => m.group === picker.group);
+    const label = `${barn.label} · ${picker.cls}${picker.grade !== "all" ? " #" + picker.grade : ""} · ${picker.wtLo}–${picker.wtLo + 50}`;
+    const id = `${picker.group}|${picker.commodity}|${picker.cls}|${picker.grade}|${picker.wtLo}|${basis}`;
+    if (added.some(a => a.id === id)) return;
+    const color = SERIES_COLORS[nextColor.current++ % SERIES_COLORS.length];
+    setAdded(a => [...a, {
+      id,
+      ...picker,
+      basis,
+      color,
+      label
+    }]);
+  };
+  const removeSeries = id => setAdded(a => a.filter(x => x.id !== id));
+  const basisLabel = basis === "per_cwt" ? "CWT" : basis === "per_head" ? "HEAD" : basis === "per_unit" ? "UNIT" : "FAMILY";
+  const allLoaded = neededGroups.every(g => cache[g]);
+  const series = useMemo(() => {
+    if (!allLoaded) return [];
+    return added.map(a => {
+      let pts = timeSeries(cache[a.group] || [], {
+        rowSpecies,
+        commodity: a.commodity,
+        cls: a.cls,
+        grade: a.grade,
+        wtLo: a.wtLo,
+        basis: a.basis
+      });
+      if (smoothed) pts = smooth4(pts);
+      if (indexed) pts = indexToStart(pts);
+      return {
+        id: a.id,
+        color: a.color,
+        points: pts,
+        basisLabel
+      };
+    });
+  }, [cache, added, allLoaded, smoothed, indexed, rowSpecies, basisLabel]);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "controls"
+  }, /*#__PURE__*/React.createElement("label", null, "Market", /*#__PURE__*/React.createElement("select", {
+    value: picker.group,
+    onChange: e => setPicker(p => ({
+      ...p,
+      group: e.target.value,
+      commodity: null,
+      cls: null,
+      wtLo: null
+    }))
+  }, allBarns.map(m => /*#__PURE__*/React.createElement("option", {
+    key: m.group,
+    value: m.group
+  }, m.label, m.tier === "context" ? " (summary)" : m.tier === "video" ? " (video)" : "")))), /*#__PURE__*/React.createElement("label", null, "Class", /*#__PURE__*/React.createElement("select", {
+    value: picker.cls || "",
+    onChange: e => setPicker(p => ({
+      ...p,
+      cls: e.target.value,
+      wtLo: null
+    })),
+    disabled: !opts || !picker.commodity
+  }, opts && picker.commodity && opts.has(picker.commodity) && [...opts.get(picker.commodity).keys()].map(k => /*#__PURE__*/React.createElement("option", {
+    key: k,
+    value: k
+  }, k)))), /*#__PURE__*/React.createElement("label", null, "Grade", /*#__PURE__*/React.createElement("select", {
+    value: picker.grade,
+    onChange: e => setPicker(p => ({
+      ...p,
+      grade: e.target.value
+    }))
+  }, grades.map(g => /*#__PURE__*/React.createElement("option", {
+    key: g,
+    value: g
+  }, g === "all" ? "All" : "#" + g)))), /*#__PURE__*/React.createElement("label", null, "Weight", /*#__PURE__*/React.createElement("select", {
+    value: picker.wtLo ?? "",
+    onChange: e => setPicker(p => ({
+      ...p,
+      wtLo: Number(e.target.value)
+    })),
+    disabled: !opts || !picker.cls
+  }, opts && picker.commodity && picker.cls && opts.get(picker.commodity) && opts.get(picker.commodity).has(picker.cls) && [...opts.get(picker.commodity).get(picker.cls)].sort((a, b) => a - b).map(w => /*#__PURE__*/React.createElement("option", {
+    key: w,
+    value: w
+  }, w, "–", w + 50, " lb")))), /*#__PURE__*/React.createElement("button", {
+    className: "add-btn",
+    onClick: addSeries,
+    disabled: !picker.cls || picker.wtLo == null
+  }, "+ Add line")), /*#__PURE__*/React.createElement("div", {
+    className: "explore-toggles"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "seg"
+  }, "Basis", /*#__PURE__*/React.createElement("select", {
+    value: basis,
+    onChange: e => {
+      setBasis(e.target.value);
+      setAdded([]);
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "per_cwt"
+  }, "$/cwt"), /*#__PURE__*/React.createElement("option", {
+    value: "per_head"
+  }, "$/head"), /*#__PURE__*/React.createElement("option", {
+    value: "per_unit"
+  }, "$/unit"), /*#__PURE__*/React.createElement("option", {
+    value: "per_family"
+  }, "$/family"))), /*#__PURE__*/React.createElement("label", {
+    className: "chk"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: smoothed,
+    onChange: e => setSmoothed(e.target.checked)
+  }), " 4-wk smooth"), /*#__PURE__*/React.createElement("label", {
+    className: "chk"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: indexed,
+    onChange: e => setIndexed(e.target.checked)
+  }), " Index to start (=100)"), added.length > 0 && /*#__PURE__*/React.createElement("button", {
+    className: "clear-btn",
+    onClick: () => setAdded([])
+  }, "Clear all")), loading && /*#__PURE__*/React.createElement("div", {
+    className: "loading"
+  }, "Loading ", MARKETS.find(m => m.group === loading.group)?.label, "…"), error && /*#__PURE__*/React.createElement("div", {
+    className: "error"
+  }, "Couldn't load data (", error, ")."), allLoaded && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ExploreChart, {
+    series: series,
+    indexed: indexed
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "explore-legend"
+  }, added.map(a => /*#__PURE__*/React.createElement("span", {
+    key: a.id,
+    className: "ex-chip",
+    style: {
+      borderColor: a.color
+    }
+  }, /*#__PURE__*/React.createElement("i", {
+    className: "chip-dot",
+    style: {
+      background: a.color
+    }
+  }), a.label, /*#__PURE__*/React.createElement("button", {
+    className: "ex-x",
+    onClick: () => removeSeries(a.id),
+    "aria-label": "remove"
+  }, "×"))), !added.length && /*#__PURE__*/React.createElement("span", {
+    className: "hint"
+  }, "No lines yet — build one above and hit “Add line.” Different basis types (cwt vs head) can’t share a chart; switch Basis to plot pairs/bred stock.")), /*#__PURE__*/React.createElement("div", {
+    className: "foot"
+  }, "Your sandbox — plot anything against anything over time. This view is for exploring, not recommendations.", basis !== "per_cwt" && " (per-head / per-unit series — pairs, bred stock, some sheep-goat lots.)")));
+}
+
+/* ---------- APP SHELL: species tabs + view tabs ---------- */
+function App() {
+  const [species, setSpecies] = useState("cattle");
+  const [view, setView] = useState("compare");
+  return /*#__PURE__*/React.createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React.createElement("header", null, /*#__PURE__*/React.createElement("div", {
+    className: "brand"
+  }, /*#__PURE__*/React.createElement("svg", {
+    className: "brand-mark",
+    viewBox: "-34 -2 68 78",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M-11,8.9 C-11,3.8 -6,1.3 0,1.3 C6,1.3 11,3.8 11,8.9 L11,21.7 C11,28.1 18,29.4 24,31.9 C30,35.1 30,38.3 30,43.4 L30,66.4 C30,70.9 27,72.1 20,72.1 L-20,72.1 C-27,72.1 -30,70.9 -30,66.4 L-30,43.4 C-30,38.3 -30,35.1 -24,31.9 C-18,29.4 -11,28.1 -11,21.7 Z"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "0",
+    cy: "12.8",
+    r: "4.5"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Livestock Market Analyzer")))), /*#__PURE__*/React.createElement("div", {
+    className: "species-tabs",
+    role: "tablist"
+  }, SPECIES.map(s => /*#__PURE__*/React.createElement("button", {
+    key: s.key,
+    role: "tab",
+    "aria-selected": species === s.key,
+    className: "species-tab" + (species === s.key ? " on" : ""),
+    onClick: () => setSpecies(s.key)
+  }, s.label))), /*#__PURE__*/React.createElement("div", {
+    className: "view-tabs"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "view-tab" + (view === "compare" ? " on" : ""),
+    onClick: () => setView("compare")
+  }, "Compare Markets"), /*#__PURE__*/React.createElement("button", {
+    className: "view-tab" + (view === "seasonal" ? " on" : ""),
+    onClick: () => setView("seasonal")
+  }, "Seasonal Index"), /*#__PURE__*/React.createElement("button", {
+    className: "view-tab" + (view === "explore" ? " on" : ""),
+    onClick: () => setView("explore")
+  }, "Explore")), view === "compare" ? /*#__PURE__*/React.createElement(CompareView, {
+    key: species,
+    species: species
+  }) : view === "seasonal" ? /*#__PURE__*/React.createElement(SeasonalView, {
+    key: species,
+    species: species
+  }) : /*#__PURE__*/React.createElement(ExploreView, {
+    key: species,
+    species: species
+  }));
+}
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
+
+</script>
+</body>
+</html>
