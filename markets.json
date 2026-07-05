@@ -1,5 +1,5 @@
 {
-  "comment": "Livestock Market Analyzer report configuration. tier: 'tradeable' = individual barn, spot cash prices (sell venues, spot-comparable); 'context' = regional/state weekly summary (reference, drives seasonal indexes); 'video' = video/internet forward auction \u2014 prices include pencil shrink, price slides, and future delivery; NOT spot-comparable to barn prices, compare only to own history. market_group merges paired feeder + slaughter/replacement reports into one market entity.",
+  "comment": "Livestock Market Analyzer report configuration. tier: 'tradeable' = individual barn, spot cash prices (sell venues, spot-comparable); 'context' = regional/state weekly summary (reference, drives seasonal indexes); market_group merges paired feeder + slaughter/replacement reports into one market entity.",
   "reports": [
     {
       "slug_id": 1826,
@@ -225,24 +225,6 @@
       "species": "cattle",
       "tier": "context",
       "market_group": "co_cattle_summary"
-    },
-    {
-      "slug_id": 3103,
-      "slug": "AMS_3103",
-      "title": "Superior Livestock Video/Internet (Catalog)",
-      "location": "Fort Worth, TX",
-      "species": "cattle",
-      "tier": "video",
-      "market_group": "superior_video"
-    },
-    {
-      "slug_id": 3242,
-      "slug": "AMS_3242",
-      "title": "Western Video Market Livestock",
-      "location": "Cottonwood, CA",
-      "species": "cattle",
-      "tier": "video",
-      "market_group": "western_video"
     }
   ],
   "_pending_verification": [
@@ -250,6 +232,7 @@
     "Apache OK Video/Internet \u2014 tier:video, slug collided with Superior in search (both showed 3102), confirm",
     "Superior primary sale-event report 2713 vs catalog 3103 \u2014 decide which/both",
     "Ozarks Regional West Plains MO (~1249 feeder / ~1651 slaughter) \u2014 sell-region candidate, confirm",
-    "Nebraska Weekly Cattle Summary \u2014 reference tier:context, find slug if wanted"
+    "Nebraska Weekly Cattle Summary \u2014 reference tier:context, find slug if wanted",
+    "Video/internet: slugs 3103 (Superior) & 3242 (Western) returned near-empty on backfill \u2014 removed. Video auction data likely lives under different slugs; revisit if a populated one is found."
   ]
 }
