@@ -107,6 +107,25 @@ h1{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:30px
 .ex-x:hover{color:var(--clay)}
 .explore-legend .hint{font-size:13px;color:var(--ink-soft);font-style:italic}
 .grid-faint{stroke:var(--rule);opacity:.5}
+.info-tier{margin-bottom:26px}
+.info-tier-head{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:15px;letter-spacing:.7px;
+  text-transform:uppercase;color:var(--ink);margin:0 0 8px;padding-bottom:5px;border-bottom:2px solid var(--rule)}
+.info-tbl-wrap{overflow-x:auto}
+.info-tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+.info-tbl th{font-family:"Barlow Semi Condensed",sans-serif;font-weight:600;font-size:11px;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--ink-soft);text-align:left;padding:6px 10px;border-bottom:1.5px solid var(--rule)}
+.info-tbl td{padding:8px 10px;border-bottom:1px solid var(--rule)}
+.info-tbl tr:last-child td{border-bottom:none}
+.info-tbl tr.pending td{color:var(--ink-soft);opacity:.7}
+.info-tbl .c-rk{width:26px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace}
+.info-tbl .c-name{font-weight:600;white-space:nowrap}
+.info-tbl .c-num{text-align:right;font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+.info-tbl .c-slug{font-family:"IBM Plex Mono",monospace;color:var(--ink-soft);text-align:right}
+.info-tbl .c-day,.info-tbl .c-yrs,.info-tbl .c-sp{white-space:nowrap;color:var(--ink-soft)}
+.depth-flag{display:inline-block;font-family:"Barlow Semi Condensed",sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.4px;text-transform:uppercase;color:var(--tag-deep);background:#f3e3c3;border:1px solid var(--tag-deep);
+  padding:1px 5px;border-radius:8px;margin-left:7px;vertical-align:1px}
+.info-tbl .pend{font-style:italic;font-size:12px;color:var(--ink-soft)}
 .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
 .controls label{display:flex;flex-direction:column;gap:4px;font-family:"Barlow Semi Condensed",sans-serif;
   font-weight:600;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-soft)}
@@ -254,6 +273,13 @@ const MARKETS = [
   loc: "OK",
   species: "cattle",
   tier: "context"
+}, {
+  group: "co_cattle_summary",
+  slug: 1907,
+  label: "Colorado Summary",
+  loc: "CO",
+  species: "cattle",
+  tier: "context"
 },
 // sheep / goat tradeable barns (shared reports; species split per-row)
 {
@@ -289,6 +315,27 @@ const MARKETS = [
   slug: 3659,
   label: "Salem",
   loc: "Salem, AR",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "ft_collins",
+  slug: 1899,
+  label: "Ft. Collins",
+  loc: "Ft. Collins, CO",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "new_holland",
+  slug: 1913,
+  label: "New Holland",
+  loc: "New Holland, PA",
+  species: "sheep_goat",
+  tier: "tradeable"
+}, {
+  group: "montgomery_city",
+  slug: 1807,
+  label: "Montgomery City",
+  loc: "Montgomery City, MO",
   species: "sheep_goat",
   tier: "tradeable"
 }, {
@@ -1710,6 +1757,144 @@ function ExploreView({
   }, "Your sandbox — plot anything against anything over time. This view is for exploring, not recommendations.", basis !== "per_cwt" && " (per-head / per-unit series — pairs, bred stock, some sheep-goat lots.)")));
 }
 
+/* ---------- BARN INFO: volume + metadata table ---------- */
+const WEEKDAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function barnStats(rows) {
+  if (!rows || !rows.length) return null;
+  let totalHead = 0;
+  const byDate = new Map(); // date -> head (sale-day volume)
+  const years = new Set();
+  const weekdays = new Array(7).fill(0);
+  for (const r of rows) {
+    const h = r.head || 0;
+    if (!h) continue;
+    totalHead += h;
+    byDate.set(r.date, (byDate.get(r.date) || 0) + h);
+    const [m, d, y] = r.date.split("/").map(Number);
+    years.add(y);
+    weekdays[new Date(Date.UTC(y, m - 1, d)).getUTCDay()] += h;
+  }
+  const nYears = years.size || 1;
+  const saleDays = byDate.size || 1;
+  const primaryWd = weekdays.indexOf(Math.max(...weekdays));
+  const yrArr = [...years].sort();
+  return {
+    headPerYear: Math.round(totalHead / nYears),
+    avgPerSaleDay: Math.round(totalHead / saleDays),
+    saleDay: WEEKDAY[primaryWd],
+    yearsSpan: yrArr.length ? `${yrArr[0]}–${yrArr[yrArr.length - 1]}` : "—",
+    nYears,
+    recentOnly: yrArr.length > 0 && yrArr[0] >= CURRENT_YEAR - 2 // <3 yrs = current-price only
+  };
+}
+const TIER_LABEL = {
+  tradeable: "Sale Barn",
+  context: "Regional Summary",
+  video: "Video / Internet"
+};
+const TIER_ORDER = {
+  tradeable: 0,
+  context: 1,
+  video: 2
+};
+function InfoView() {
+  // load every market group once
+  const groups = useMemo(() => [...new Set(MARKETS.map(m => m.group))], []);
+  const {
+    cache,
+    loading,
+    error
+  } = useMarketData(groups);
+  const loadedCount = groups.filter(g => cache[g]).length;
+  const rows = useMemo(() => {
+    return MARKETS.map(m => {
+      const stats = cache[m.group] ? barnStats(cache[m.group]) : null;
+      return {
+        ...m,
+        stats
+      };
+    });
+  }, [cache]);
+
+  // group by tier, sort by head/year desc within tier
+  const grouped = useMemo(() => {
+    const g = {};
+    for (const r of rows) {
+      (g[r.tier] ||= []).push(r);
+    }
+    for (const tier in g) g[tier].sort((a, b) => (b.stats?.headPerYear || -1) - (a.stats?.headPerYear || -1));
+    return Object.entries(g).sort((a, b) => TIER_ORDER[a[0]] - TIER_ORDER[b[0]]);
+  }, [rows]);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "foot",
+    style: {
+      marginTop: 0,
+      marginBottom: 14,
+      borderTop: "none",
+      paddingTop: 0
+    }
+  }, "Every report feeding the analyzer, ranked by volume within each tier. Bigger barns trade more head, so their prices are more liquid and reliable. Volumes are computed live from loaded data."), loading && /*#__PURE__*/React.createElement("div", {
+    className: "loading"
+  }, "Loading market data — ", loadedCount, " of ", groups.length, " reports…"), error && /*#__PURE__*/React.createElement("div", {
+    className: "error"
+  }, "Couldn't load some data (", error, ")."), loadedCount > 0 && grouped.map(([tier, list]) => /*#__PURE__*/React.createElement("div", {
+    key: tier,
+    className: "info-tier"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "info-tier-head"
+  }, TIER_LABEL[tier] || tier), /*#__PURE__*/React.createElement("div", {
+    className: "info-tbl-wrap"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "info-tbl"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    className: "c-rk"
+  }, "#"), /*#__PURE__*/React.createElement("th", {
+    className: "c-name"
+  }, "Market"), /*#__PURE__*/React.createElement("th", {
+    className: "c-loc"
+  }, "Location"), /*#__PURE__*/React.createElement("th", {
+    className: "c-sp"
+  }, "Species"), /*#__PURE__*/React.createElement("th", {
+    className: "c-day"
+  }, "Sale Day"), /*#__PURE__*/React.createElement("th", {
+    className: "c-num"
+  }, "Head/Yr"), /*#__PURE__*/React.createElement("th", {
+    className: "c-num"
+  }, "Avg/Sale"), /*#__PURE__*/React.createElement("th", {
+    className: "c-yrs"
+  }, "Years"), /*#__PURE__*/React.createElement("th", {
+    className: "c-slug"
+  }, "Slug"))), /*#__PURE__*/React.createElement("tbody", null, list.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+    key: r.group,
+    className: !r.stats ? "pending" : ""
+  }, /*#__PURE__*/React.createElement("td", {
+    className: "c-rk"
+  }, r.stats ? i + 1 : "—"), /*#__PURE__*/React.createElement("td", {
+    className: "c-name"
+  }, r.label, r.stats?.recentOnly && /*#__PURE__*/React.createElement("span", {
+    className: "depth-flag",
+    title: "Under 3 years of history — current-price comparison only, not seasonal"
+  }, "recent-only")), /*#__PURE__*/React.createElement("td", {
+    className: "c-loc"
+  }, r.loc), /*#__PURE__*/React.createElement("td", {
+    className: "c-sp"
+  }, r.species === "sheep_goat" ? "sheep / goat" : r.species), /*#__PURE__*/React.createElement("td", {
+    className: "c-day"
+  }, r.stats ? r.stats.saleDay : "—"), /*#__PURE__*/React.createElement("td", {
+    className: "c-num"
+  }, r.stats ? r.stats.headPerYear.toLocaleString() : /*#__PURE__*/React.createElement("span", {
+    className: "pend"
+  }, "pending backfill")), /*#__PURE__*/React.createElement("td", {
+    className: "c-num"
+  }, r.stats ? r.stats.avgPerSaleDay.toLocaleString() : "—"), /*#__PURE__*/React.createElement("td", {
+    className: "c-yrs"
+  }, r.stats ? r.stats.yearsSpan : "—"), /*#__PURE__*/React.createElement("td", {
+    className: "c-slug"
+  }, r.slug)))))))), /*#__PURE__*/React.createElement("div", {
+    className: "foot"
+  }, "“Head/Yr” is total reported head divided by years of data — the cleanest size measure. “Avg/Sale” is head per sale-day. Regional summaries aggregate many barns, so their volume isn’t comparable to a single barn’s. Video/internet reports are episodic (a few large sales a year). Slug = USDA MARS report ID."));
+}
+
 /* ---------- APP SHELL: species tabs + view tabs ---------- */
 function App() {
   const [species, setSpecies] = useState("cattle");
@@ -1730,7 +1915,10 @@ function App() {
     r: "4.5"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Livestock Market Analyzer")))), /*#__PURE__*/React.createElement("div", {
     className: "species-tabs",
-    role: "tablist"
+    role: "tablist",
+    style: {
+      visibility: view === "info" ? "hidden" : "visible"
+    }
   }, SPECIES.map(s => /*#__PURE__*/React.createElement("button", {
     key: s.key,
     role: "tab",
@@ -1748,16 +1936,19 @@ function App() {
   }, "Seasonal Index"), /*#__PURE__*/React.createElement("button", {
     className: "view-tab" + (view === "explore" ? " on" : ""),
     onClick: () => setView("explore")
-  }, "Explore")), view === "compare" ? /*#__PURE__*/React.createElement(CompareView, {
+  }, "Explore"), /*#__PURE__*/React.createElement("button", {
+    className: "view-tab" + (view === "info" ? " on" : ""),
+    onClick: () => setView("info")
+  }, "Sale Barns")), view === "compare" ? /*#__PURE__*/React.createElement(CompareView, {
     key: species,
     species: species
   }) : view === "seasonal" ? /*#__PURE__*/React.createElement(SeasonalView, {
     key: species,
     species: species
-  }) : /*#__PURE__*/React.createElement(ExploreView, {
+  }) : view === "explore" ? /*#__PURE__*/React.createElement(ExploreView, {
     key: species,
     species: species
-  }));
+  }) : /*#__PURE__*/React.createElement(InfoView, null));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
 
