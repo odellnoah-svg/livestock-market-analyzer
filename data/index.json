@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-10",
+  "generated": "2026-07-17",
   "files": [
     {
       "slug_id": 2051,
@@ -34,7 +34,7 @@
     {
       "slug_id": 2051,
       "year": 2026,
-      "records": 1467,
+      "records": 1538,
       "file": "data/benton_county/2051_2026.json"
     },
     {
@@ -142,7 +142,7 @@
     {
       "slug_id": 1805,
       "year": 2026,
-      "records": 1288,
+      "records": 1377,
       "file": "data/diamond/1805_2026.json"
     },
     {
@@ -178,7 +178,7 @@
     {
       "slug_id": 3916,
       "year": 2026,
-      "records": 2714,
+      "records": 2797,
       "file": "data/four_state/3916_2026.json"
     },
     {
@@ -214,7 +214,7 @@
     {
       "slug_id": 1899,
       "year": 2026,
-      "records": 1811,
+      "records": 1899,
       "file": "data/ft_collins/1899_2026.json"
     },
     {
@@ -250,7 +250,7 @@
     {
       "slug_id": 1245,
       "year": 2026,
-      "records": 1857,
+      "records": 1930,
       "file": "data/joplin/1245_2026.json"
     },
     {
@@ -286,7 +286,7 @@
     {
       "slug_id": 1797,
       "year": 2026,
-      "records": 1038,
+      "records": 1075,
       "file": "data/joplin/1797_2026.json"
     },
     {
@@ -322,7 +322,7 @@
     {
       "slug_id": 1895,
       "year": 2026,
-      "records": 3208,
+      "records": 3318,
       "file": "data/ks_cattle_summary/1895_2026.json"
     },
     {
@@ -358,7 +358,7 @@
     {
       "slug_id": 1827,
       "year": 2026,
-      "records": 1990,
+      "records": 2079,
       "file": "data/mcalester/1827_2026.json"
     },
     {
@@ -394,7 +394,7 @@
     {
       "slug_id": 1821,
       "year": 2026,
-      "records": 9754,
+      "records": 10037,
       "file": "data/mo_cattle_summary/1821_2026.json"
     },
     {
@@ -430,7 +430,7 @@
     {
       "slug_id": 1833,
       "year": 2026,
-      "records": 2442,
+      "records": 2558,
       "file": "data/mo_sheep_goat_summary/1833_2026.json"
     },
     {
@@ -502,7 +502,7 @@
     {
       "slug_id": 1913,
       "year": 2026,
-      "records": 2676,
+      "records": 2782,
       "file": "data/new_holland/1913_2026.json"
     },
     {
@@ -538,7 +538,7 @@
     {
       "slug_id": 2050,
       "year": 2026,
-      "records": 1389,
+      "records": 1451,
       "file": "data/north_arkansas/2050_2026.json"
     },
     {
@@ -574,7 +574,7 @@
     {
       "slug_id": 1806,
       "year": 2026,
-      "records": 728,
+      "records": 824,
       "file": "data/norwood/1806_2026.json"
     },
     {
@@ -610,7 +610,7 @@
     {
       "slug_id": 1831,
       "year": 2026,
-      "records": 11007,
+      "records": 11390,
       "file": "data/ok_cattle_summary/1831_2026.json"
     },
     {
@@ -646,7 +646,7 @@
     {
       "slug_id": 1280,
       "year": 2026,
-      "records": 2472,
+      "records": 2571,
       "file": "data/okc_national/1280_2026.json"
     },
     {
@@ -682,7 +682,7 @@
     {
       "slug_id": 1823,
       "year": 2026,
-      "records": 789,
+      "records": 806,
       "file": "data/okc_national/1823_2026.json"
     },
     {
@@ -718,7 +718,7 @@
     {
       "slug_id": 1281,
       "year": 2026,
-      "records": 3204,
+      "records": 3324,
       "file": "data/okc_west/1281_2026.json"
     },
     {
@@ -754,7 +754,7 @@
     {
       "slug_id": 1825,
       "year": 2026,
-      "records": 1059,
+      "records": 1095,
       "file": "data/okc_west/1825_2026.json"
     },
     {
@@ -790,7 +790,7 @@
     {
       "slug_id": 1826,
       "year": 2026,
-      "records": 350,
+      "records": 381,
       "file": "data/pawnee/1826_2026.json"
     },
     {
@@ -880,7 +880,7 @@
     {
       "slug_id": 1845,
       "year": 2026,
-      "records": 5463,
+      "records": 5654,
       "file": "data/swmo_cattle_summary/1845_2026.json"
     },
     {
@@ -916,7 +916,7 @@
     {
       "slug_id": 1832,
       "year": 2026,
-      "records": 4324,
+      "records": 4473,
       "file": "data/tulsa/1832_2026.json"
     },
     {
