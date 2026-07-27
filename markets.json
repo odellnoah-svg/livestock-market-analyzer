@@ -225,14 +225,113 @@
       "species": "cattle",
       "tier": "context",
       "market_group": "co_cattle_summary"
+    },
+    {
+      "slug_id": 1830,
+      "slug": "AMS_1830",
+      "title": "Southern Oklahoma Livestock Feeder",
+      "location": "Ada, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "ada"
+    },
+    {
+      "slug_id": 1843,
+      "slug": "AMS_1843",
+      "title": "Southern Oklahoma Livestock Slaughter/Repl",
+      "location": "Ada, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "ada"
+    },
+    {
+      "slug_id": 1829,
+      "slug": "AMS_1829",
+      "title": "Apache Livestock Auction",
+      "location": "Apache, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "apache"
+    },
+    {
+      "slug_id": 3794,
+      "slug": "AMS_3794",
+      "title": "Beaver Livestock Auction Feeder",
+      "location": "Beaver, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "beaver"
+    },
+    {
+      "slug_id": 3795,
+      "slug": "AMS_3795",
+      "title": "Beaver Livestock Auction Slaughter/Repl",
+      "location": "Beaver, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "beaver"
+    },
+    {
+      "slug_id": 1828,
+      "slug": "AMS_1828",
+      "title": "Woodward Livestock Feeder",
+      "location": "Woodward, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "woodward"
+    },
+    {
+      "slug_id": 1824,
+      "slug": "AMS_1824",
+      "title": "Woodward Livestock Slaughter/Repl",
+      "location": "Woodward, OK",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "woodward"
+    },
+    {
+      "slug_id": 2014,
+      "slug": "AMS_2014",
+      "title": "Producers Livestock Sheep & Goat",
+      "location": "San Angelo, TX",
+      "species": "sheep_goat",
+      "tier": "tradeable",
+      "market_group": "san_angelo_sg"
+    },
+    {
+      "slug_id": 2015,
+      "slug": "AMS_2015",
+      "title": "Producers Livestock Cattle",
+      "location": "San Angelo, TX",
+      "species": "cattle",
+      "tier": "tradeable",
+      "market_group": "san_angelo_cattle"
+    },
+    {
+      "slug_id": 3172,
+      "slug": "SA_LS850",
+      "title": "National Sheep Summary (Daily)",
+      "location": "National",
+      "species": "sheep_goat",
+      "tier": "context",
+      "market_group": "natl_sheep_summary"
+    },
+    {
+      "slug_id": 3173,
+      "slug": "SA_LS855",
+      "title": "Weekly National Sheep Summary",
+      "location": "National",
+      "species": "sheep_goat",
+      "tier": "context",
+      "market_group": "natl_sheep_weekly"
     }
   ],
   "_pending_verification": [
-    "Beaver OK Feeder Cattle (~3794) + Slaughter/Replacement (~3795) \u2014 sell-region tier:tradeable, confirm slugs before backfill",
-    "Apache OK Video/Internet \u2014 tier:video, slug collided with Superior in search (both showed 3102), confirm",
     "Superior primary sale-event report 2713 vs catalog 3103 \u2014 decide which/both",
     "Ozarks Regional West Plains MO (~1249 feeder / ~1651 slaughter) \u2014 sell-region candidate, confirm",
     "Nebraska Weekly Cattle Summary \u2014 reference tier:context, find slug if wanted",
-    "Video/internet: slugs 3103 (Superior) & 3242 (Western) returned near-empty on backfill \u2014 removed. Video auction data likely lives under different slugs; revisit if a populated one is found."
+    "Video/internet: slugs 3103 (Superior) & 3242 (Western) returned near-empty on backfill \u2014 removed. Video auction data likely lives under different slugs; revisit if a populated one is found.",
+    "Ada/Apache/Beaver/Woodward OK cattle barns added & slug-verified 2026-07 (Ada 1830/1843, Apache 1829, Beaver 3794/3795, Woodward 1828/1824).",
+    "San Angelo TX added & slug-verified 2026-07 (S&G 2014, Cattle 2015). National sheep summaries 3172/3173 added (shallow \u2014 data only from Feb 2026)."
   ]
 }
