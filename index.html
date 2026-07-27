@@ -151,6 +151,70 @@ h1{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:30px
 .sf-btn:focus-visible{outline:2px solid var(--tag);outline-offset:1px}
 .stat-swing{background:#f6efe0;border-color:var(--tag-deep)}
 .caveat{color:var(--clay);font-style:italic}
+.cls-multi{display:flex;flex-direction:column;gap:2px;position:relative}
+.cls-lbl{font-family:"Barlow Semi Condensed",sans-serif;font-size:12px;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--ink-soft)}
+.cls-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:130px;
+  font-family:inherit;font-size:14px;padding:7px 11px;border:1.5px solid var(--rule);border-radius:6px;
+  background:var(--card);color:var(--ink);cursor:pointer}
+.cls-trigger:disabled{opacity:.5;cursor:default}
+.cls-trigger.open{border-color:var(--ink)}
+.sw-line{vertical-align:middle;margin-right:6px;background:transparent}
+.legend-cmp{gap:18px;font-size:13px;color:var(--ink)}
+.legend-cmp span{display:inline-flex;align-items:center;background:transparent}
+.legend-cmp .sw-line{background:transparent}
+.grades-view{max-width:820px;line-height:1.55}
+.grades-intro{font-size:15px;color:var(--ink);margin-bottom:22px}
+.grades-h{font-family:"Barlow Semi Condensed",sans-serif;font-size:20px;font-weight:700;color:var(--ink);
+  margin:28px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--rule)}
+.grades-p{font-size:14px;color:var(--ink);margin-bottom:14px}
+.muscle-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:18px 0 22px;
+  padding:18px;background:var(--card);border:1.5px solid var(--rule);border-radius:10px}
+.muscle-fig{margin:0;text-align:center;flex:1;min-width:140px;max-width:200px}
+.muscle-fig svg{width:100%;height:auto;max-height:160px}
+.mf-hip{fill:#d9d3c4;opacity:.55}
+.mf-round{stroke:var(--ink);stroke-width:1.5}
+.mf-tail{stroke:var(--ink-soft);stroke-width:2;opacity:.4}
+.mf-width{stroke:var(--clay);stroke-width:2;stroke-dasharray:3 2}
+.muscle-fig figcaption{margin-top:6px}
+.muscle-fig figcaption strong{display:block;font-size:16px;color:var(--ink)}
+.muscle-fig figcaption span{font-size:12px;color:var(--ink-soft)}
+.grades-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 8px}
+.gr-card{background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:12px 14px}
+.gr-card h4{font-family:"Barlow Semi Condensed",sans-serif;font-size:16px;margin:0 0 6px;color:var(--ink)}
+.gr-card p{font-size:12.5px;color:var(--ink-soft);margin:0;line-height:1.45}
+.gr-card.gr-1{border-top:3px solid #8a9b6a}
+.gr-card.gr-2{border-top:3px solid #b0a878}
+.gr-card.gr-3{border-top:3px solid #c98f6a}
+.grades-list{font-size:14px;color:var(--ink);padding-left:20px;margin:8px 0 8px}
+.grades-list li{margin-bottom:9px}
+.grades-note{background:#f6efe0;border:1.5px solid var(--tag-deep);border-radius:8px;padding:14px 16px;
+  font-size:14px;color:var(--ink);margin:22px 0 14px}
+.grades-src{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:16px}
+@media(max-width:640px){.grades-cards{grid-template-columns:1fr}}
+.wt-check-group{display:flex;flex-direction:column;gap:4px}
+.wt-check-label{font-family:"Barlow Semi Condensed",sans-serif;font-size:12px;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--ink-soft)}
+.wt-dropdown{position:relative}
+.wt-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:150px;
+  font-family:inherit;font-size:14px;padding:7px 11px;border:1.5px solid var(--rule);border-radius:6px;
+  background:var(--card);color:var(--ink);cursor:pointer}
+.wt-trigger:disabled{opacity:.5;cursor:default}
+.wt-trigger.open{border-color:var(--ink)}
+.wt-arrow{font-size:11px;color:var(--ink-soft);transition:transform .15s}
+.wt-trigger.open .wt-arrow{transform:rotate(180deg)}
+.wt-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:30;min-width:170px;max-height:280px;
+  overflow-y:auto;background:var(--card);border:1.5px solid var(--rule);border-radius:8px;
+  box-shadow:0 6px 20px rgba(0,0,0,.14);padding:5px}
+.wt-opt{display:flex;align-items:center;gap:7px;font-size:13px;padding:6px 9px;border-radius:5px;
+  cursor:pointer;white-space:nowrap}
+.wt-opt:hover{background:var(--paper)}
+.wt-opt.on{background:var(--tag);font-weight:600}
+.wt-opt input{margin:0;width:13px;height:13px;cursor:pointer}
+.wt-all-btn{display:block;width:100%;text-align:left;font-size:11px;text-transform:uppercase;
+  letter-spacing:.5px;padding:6px 9px;margin-bottom:3px;border:none;border-bottom:1px solid var(--rule);
+  border-radius:0;background:var(--card);color:var(--clay);font-weight:700;cursor:pointer}
+.wt-all-btn:hover{background:var(--paper)}
 .hover-cursor{stroke:var(--ink-soft);stroke-width:1;stroke-dasharray:3 3;opacity:.6}
 .hover-pt{stroke:var(--card);stroke-width:1.5}
 .ttip-date{font-family:"Barlow Semi Condensed",sans-serif;font-weight:700;font-size:12px;fill:var(--paper);letter-spacing:.3px}
@@ -480,6 +544,54 @@ const CURRENT_YEAR = 2026;
 
 // distinct, legible series colors (up to 8)
 const SERIES_COLORS = ["#c26a2b", "#3f7d8c", "#7a9a3e", "#9a5a8c", "#b8912a", "#5a7b9a", "#8a5a3a", "#4a8a6a"];
+// SVG marker for a class shape, centered at (cx,cy) with radius r
+function ShapeMarker({
+  shape,
+  cx,
+  cy,
+  r,
+  fill,
+  className,
+  ...rest
+}) {
+  if (shape === "triangle") {
+    const h = r * 1.3;
+    return /*#__PURE__*/React.createElement("path", {
+      d: `M${cx},${cy - h} L${cx + h},${cy + h * 0.75} L${cx - h},${cy + h * 0.75} Z`,
+      fill: fill,
+      className: className,
+      ...rest
+    });
+  }
+  if (shape === "square") {
+    return /*#__PURE__*/React.createElement("rect", {
+      x: cx - r,
+      y: cy - r,
+      width: r * 2,
+      height: r * 2,
+      fill: fill,
+      className: className,
+      ...rest
+    });
+  }
+  if (shape === "diamond") {
+    const d = r * 1.25;
+    return /*#__PURE__*/React.createElement("path", {
+      d: `M${cx},${cy - d} L${cx + d},${cy} L${cx},${cy + d} L${cx - d},${cy} Z`,
+      fill: fill,
+      className: className,
+      ...rest
+    });
+  }
+  return /*#__PURE__*/React.createElement("circle", {
+    cx: cx,
+    cy: cy,
+    r: r,
+    fill: fill,
+    className: className,
+    ...rest
+  });
+}
 
 /* ---------- helpers ---------- */
 function isoWeek(dateStr) {
@@ -1023,23 +1135,23 @@ function CompareChart({
     if (!s.curve.length) return null;
     const d = s.curve.map((p, i) => `${i ? "L" : "M"}${x(p.wt).toFixed(1)},${y(p.price).toFixed(1)}`).join("");
     return /*#__PURE__*/React.createElement("g", {
-      key: s.group
+      key: s.group + "|" + (s.cls || "")
     }, /*#__PURE__*/React.createElement("path", {
       d: d,
       className: "cmp-line",
       style: {
-        stroke: s.color
+        stroke: s.color,
+        strokeDasharray: s.dash || "none"
       }
     }), s.curve.map(p => /*#__PURE__*/React.createElement("g", {
       key: p.wt
-    }, /*#__PURE__*/React.createElement("circle", {
+    }, /*#__PURE__*/React.createElement(ShapeMarker, {
+      shape: s.shape,
       cx: x(p.wt),
       cy: y(p.price),
-      r: selectedWt === p.wt ? 6 : 3.5,
+      r: selectedWt === p.wt ? 6 : 4,
       className: selectedWt === p.wt ? "cmp-dot hi" : "cmp-dot",
-      style: {
-        fill: s.color
-      },
+      fill: s.color,
       onClick: onSelectWeight ? () => onSelectWeight(p.wt) : undefined
     }), /*#__PURE__*/React.createElement("circle", {
       cx: x(p.wt),
@@ -1173,17 +1285,27 @@ function CompareView({
   const allBarns = marketsForSpecies(species).filter(m => m.tier === "tradeable");
   const [selected, setSelected] = useState(() => DEFAULT_COMPARE[species] || allBarns.slice(0, 4).map(b => b.group));
   const [commodity, setCommodity] = useState(null);
-  const [cls, setCls] = useState(null);
+  const [classes, setClasses] = useState([]); // multi-select classes
   const [grade, setGrade] = useState("all");
+  const [clsOpen, setClsOpen] = useState(false);
   const [days, setDays] = useState(60);
   const [highlightWt, setHighlightWt] = useState(null);
+  const clsRef = useRef(null);
 
   // reset selection when species changes
   useEffect(() => {
     setSelected(DEFAULT_COMPARE[species] || allBarns.slice(0, 4).map(b => b.group));
     setCommodity(null);
-    setCls(null);
+    setClasses([]);
   }, [species]);
+  useEffect(() => {
+    if (!clsOpen) return;
+    const onDoc = e => {
+      if (clsRef.current && !clsRef.current.contains(e.target)) setClsOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [clsOpen]);
   const {
     cache,
     loading,
@@ -1191,50 +1313,74 @@ function CompareView({
   } = useMarketData(selected);
   const allLoaded = selected.every(g => cache[g]);
   const opts = useMemo(() => allLoaded ? buildOptions(cache, selected, rowSpecies) : null, [cache, selected, rowSpecies, allLoaded]);
+  const availClasses = useMemo(() => opts && commodity && opts.has(commodity) ? [...opts.get(commodity).keys()] : [], [opts, commodity]);
   useEffect(() => {
     if (!opts || !opts.size) return;
-    let c = commodity,
-      k = cls;
+    let c = commodity;
     if (!c || !opts.has(c)) {
       const d = pickDefault(opts);
-      c = d.commodity;
-      k = d.cls;
-    } else if (!k || !opts.get(c).has(k)) k = [...opts.get(c).keys()][0];
-    if (c !== commodity) setCommodity(c);
-    if (k !== cls) setCls(k);
-  }, [opts]);
+      setCommodity(d.commodity);
+      return;
+    }
+    // ensure at least one class is selected, and drop any no-longer-valid ones
+    const valid = new Set(opts.get(c).keys());
+    setClasses(prev => {
+      const kept = prev.filter(k => valid.has(k));
+      if (kept.length) return kept.length === prev.length ? prev : kept;
+      const d = pickDefault(opts);
+      return [valid.has(d.cls) ? d.cls : [...valid][0]];
+    });
+  }, [opts, commodity]);
 
-  // grades available for the current commodity+cls across selected barns
+  // grades available across selected commodity+classes
   const grades = useMemo(() => {
-    if (!allLoaded || !commodity || !cls) return ["all"];
+    if (!allLoaded || !commodity || !classes.length) return ["all"];
     const set = new Set();
-    for (const g of selected) for (const r of cache[g] || []) if (r.species === rowSpecies && r.commodity === commodity && r.cls === cls && r.muscle) set.add(r.muscle);
+    for (const g of selected) for (const r of cache[g] || []) if (r.species === rowSpecies && r.commodity === commodity && classes.includes(r.cls) && r.muscle) set.add(r.muscle);
     const order = ["1", "1-2", "2", "2-3", "3", "4"];
     return ["all", ...order.filter(x => set.has(x))];
-  }, [cache, selected, commodity, cls, allLoaded, rowSpecies]);
+  }, [cache, selected, commodity, classes, allLoaded, rowSpecies]);
+
+  // dash pattern per class (barn = color, class = line style) — made highly distinct
+  const CLASS_DASH = ["", "10 6", "1 5", "12 4 2 4"]; // solid, long-dash, dotted, dash-dot
+  const CLASS_SHAPE = ["circle", "triangle", "square", "diamond"];
   const sinceDate = useMemo(() => {
     const d = new Date();
     d.setUTCDate(d.getUTCDate() - days);
     return d;
   }, [days]);
+  const multiClass = classes.length > 1;
+  const singleBarn = selected.length === 1;
   const series = useMemo(() => {
-    if (!allLoaded || !commodity || !cls) return [];
-    return selected.map((g, i) => {
+    if (!allLoaded || !commodity || !classes.length) return [];
+    const out = [];
+    selected.forEach((g, bi) => {
       const barn = MARKETS.find(m => m.group === g);
-      const curve = barnWeightCurve(cache[g] || [], {
-        rowSpecies,
-        commodity,
-        cls,
-        grade
-      }, sinceDate);
-      return {
-        group: g,
-        label: barn.label,
-        color: SERIES_COLORS[i % SERIES_COLORS.length],
-        curve
-      };
+      classes.forEach((k, ki) => {
+        const curve = barnWeightCurve(cache[g] || [], {
+          rowSpecies,
+          commodity,
+          cls: k,
+          grade
+        }, sinceDate);
+        // If just one barn with multiple classes: color by CLASS (clearer than same-color dashes).
+        // Otherwise: color by BARN, distinguish class by dash pattern.
+        const color = singleBarn && multiClass ? SERIES_COLORS[ki % SERIES_COLORS.length] : SERIES_COLORS[bi % SERIES_COLORS.length];
+        const dash = singleBarn && multiClass ? "" : CLASS_DASH[ki % CLASS_DASH.length];
+        const shape = multiClass ? CLASS_SHAPE[ki % CLASS_SHAPE.length] : "circle";
+        out.push({
+          group: g,
+          cls: k,
+          label: multiClass ? `${barn.label} · ${k}` : barn.label,
+          color,
+          dash,
+          shape,
+          curve
+        });
+      });
     });
-  }, [cache, selected, commodity, cls, grade, sinceDate, allLoaded, rowSpecies]);
+    return out;
+  }, [cache, selected, commodity, classes, grade, sinceDate, allLoaded, rowSpecies, multiClass, singleBarn]);
 
   // ranking table at the highlighted (or default best-populated) weight
   const rankWt = useMemo(() => {
@@ -1257,6 +1403,7 @@ function CompareView({
       return p ? {
         label: s.label,
         color: s.color,
+        dash: s.dash,
         ...p
       } : null;
     }).filter(Boolean).sort((a, b) => b.price - a.price);
@@ -1265,14 +1412,33 @@ function CompareView({
   const wtOptions = useMemo(() => [...new Set(series.flatMap(s => s.curve.map(p => p.wt)))].sort((a, b) => a - b), [series]);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "controls"
-  }, /*#__PURE__*/React.createElement("label", null, "Class", /*#__PURE__*/React.createElement("select", {
-    value: cls || "",
-    onChange: e => setCls(e.target.value),
-    disabled: !opts || !commodity
-  }, opts && commodity && opts.has(commodity) && [...opts.get(commodity).keys()].map(k => /*#__PURE__*/React.createElement("option", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "cls-multi",
+    ref: clsRef
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "cls-lbl"
+  }, "Class", classes.length > 1 ? "es" : ""), /*#__PURE__*/React.createElement("button", {
+    className: "cls-trigger" + (clsOpen ? " open" : ""),
+    onClick: () => setClsOpen(o => !o),
+    disabled: !availClasses.length
+  }, /*#__PURE__*/React.createElement("span", null, classes.length === 0 ? "Select" : classes.length === 1 ? classes[0] : classes.length === availClasses.length ? "All classes" : `${classes.length} classes`), /*#__PURE__*/React.createElement("span", {
+    className: "wt-arrow"
+  }, "▾")), clsOpen && /*#__PURE__*/React.createElement("div", {
+    className: "wt-menu"
+  }, availClasses.map(k => /*#__PURE__*/React.createElement("label", {
     key: k,
-    value: k
-  }, k)))), /*#__PURE__*/React.createElement("label", null, "Grade", /*#__PURE__*/React.createElement("select", {
+    className: "wt-opt" + (classes.includes(k) ? " on" : "")
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: classes.includes(k),
+    onChange: e => {
+      setClasses(prev => {
+        if (e.target.checked) return [...prev, k];
+        const n = prev.filter(x => x !== k);
+        return n.length ? n : prev; // keep at least one
+      });
+    }
+  }), k)))), /*#__PURE__*/React.createElement("label", null, "Grade", /*#__PURE__*/React.createElement("select", {
     value: grade,
     onChange: e => setGrade(e.target.value)
   }, grades.map(gr => /*#__PURE__*/React.createElement("option", {
@@ -1322,29 +1488,46 @@ function CompareView({
     className: "loading"
   }, "Loading ", MARKETS.find(m => m.group === loading.group)?.label, " — file ", loading.done + 1, " of ", loading.total, "…"), error && /*#__PURE__*/React.createElement("div", {
     className: "error"
-  }, "Couldn't load market data (", error, "). Check the network and reload."), allLoaded && !loading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CompareChart, {
+  }, "Couldn't load market data (", error, "). Check the network and reload."), selected.length === 0 && /*#__PURE__*/React.createElement("div", {
+    className: "empty"
+  }, "Pick one or more barns above to compare prices across weights."), selected.length > 0 && allLoaded && !loading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(CompareChart, {
     series: series,
     selectedWt: rankWt,
     onSelectWeight: setHighlightWt,
     windowLabel: days <= 90 ? `LAST ${days} DAYS` : days === 182 ? "LAST 6 MONTHS · AVG" : days === 365 ? "LAST 1 YEAR · AVG" : days === 1095 ? "LAST 3 YEARS · AVG" : "LAST 5 YEARS · AVG"
   }), /*#__PURE__*/React.createElement("div", {
-    className: "legend"
+    className: "legend legend-cmp"
   }, series.filter(s => s.curve.length).map(s => /*#__PURE__*/React.createElement("span", {
-    key: s.group
-  }, /*#__PURE__*/React.createElement("i", {
-    className: "sw",
+    key: s.group + "|" + (s.cls || "")
+  }, /*#__PURE__*/React.createElement("svg", {
+    className: "sw-line",
+    width: "38",
+    height: "14"
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: "2",
+    y1: "7",
+    x2: "36",
+    y2: "7",
     style: {
-      background: s.color,
-      height: 4
+      stroke: s.color,
+      strokeWidth: 2.5,
+      strokeDasharray: s.dash || "none",
+      strokeLinecap: "round"
     }
-  }), s.label))), rankWt != null && ranking.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(ShapeMarker, {
+    shape: s.shape,
+    cx: 19,
+    cy: 7,
+    r: 4,
+    fill: s.color
+  })), s.label))), rankWt != null && ranking.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rank"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rank-head"
-  }, "Best price for ", grade === "all" ? "" : "#" + grade + " ", cls, " at ", rankWt, "–", rankWt + 50, " lb"), /*#__PURE__*/React.createElement("table", {
+  }, "Best price for ", grade === "all" ? "" : "#" + grade + " ", classes.length === 1 ? classes[0] : classes.length + " classes", " at ", rankWt, "–", rankWt + 50, " lb"), /*#__PURE__*/React.createElement("table", {
     className: "rank-tbl"
   }, /*#__PURE__*/React.createElement("tbody", null, ranking.map((r, i) => /*#__PURE__*/React.createElement("tr", {
-    key: r.label,
+    key: r.label + "|" + i,
     className: i === 0 ? "top" : ""
   }, /*#__PURE__*/React.createElement("td", {
     className: "rk"
@@ -1690,15 +1873,81 @@ function ExploreChart({
   const pTicks = [];
   const step = niceStep((pHi - pLo) / 5);
   for (let v = Math.ceil(pLo / step) * step; v <= pHi; v += step) pTicks.push(v);
-  const yrTicks = [];
-  const y0 = new Date(tMin).getUTCFullYear(),
-    y1 = new Date(tMax).getUTCFullYear();
-  for (let yr = y0; yr <= y1 + 1; yr++) {
-    const t = Date.UTC(yr, 0, 1);
-    if (t >= tMin - 3e10 && t <= tMax + 3e10) yrTicks.push({
-      t,
-      yr
+  // Adaptive x-axis ticks: choose granularity by the visible span
+  const spanDays = (tMax - tMin) / 86400000;
+  const xTicks = [];
+  const fmt = (t, mode) => {
+    const d = new Date(t);
+    if (mode === "day") return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      timeZone: "UTC"
     });
+    if (mode === "month") return d.toLocaleDateString("en-US", {
+      month: "short",
+      timeZone: "UTC"
+    });
+    if (mode === "monthyear") return d.toLocaleDateString("en-US", {
+      month: "short",
+      year: "2-digit",
+      timeZone: "UTC"
+    });
+    return String(d.getUTCFullYear());
+  };
+  if (spanDays <= 75) {
+    // weekly-ish ticks with month+day labels
+    const startD = new Date(tMin);
+    let t = Date.UTC(startD.getUTCFullYear(), startD.getUTCMonth(), startD.getUTCDate());
+    const stepMs = spanDays <= 35 ? 7 * 86400000 : 14 * 86400000;
+    for (; t <= tMax; t += stepMs) if (t >= tMin) xTicks.push({
+      t,
+      lab: fmt(t, "day")
+    });
+  } else if (spanDays <= 400) {
+    // monthly ticks; show year on January
+    const d0 = new Date(tMin);
+    let yr = d0.getUTCFullYear(),
+      mo = d0.getUTCMonth();
+    for (let t = Date.UTC(yr, mo, 1); t <= tMax;) {
+      if (t >= tMin) xTicks.push({
+        t,
+        lab: mo === 0 ? fmt(t, "monthyear") : fmt(t, "month")
+      });
+      mo++;
+      if (mo > 11) {
+        mo = 0;
+        yr++;
+      }
+      t = Date.UTC(yr, mo, 1);
+    }
+  } else if (spanDays <= 1200) {
+    // quarterly ticks with month+year
+    const d0 = new Date(tMin);
+    let yr = d0.getUTCFullYear(),
+      mo = Math.floor(d0.getUTCMonth() / 3) * 3;
+    for (let t = Date.UTC(yr, mo, 1); t <= tMax;) {
+      if (t >= tMin) xTicks.push({
+        t,
+        lab: fmt(t, "monthyear")
+      });
+      mo += 3;
+      if (mo > 11) {
+        mo -= 12;
+        yr++;
+      }
+      t = Date.UTC(yr, mo, 1);
+    }
+  } else {
+    // yearly ticks
+    const y0 = new Date(tMin).getUTCFullYear(),
+      y1 = new Date(tMax).getUTCFullYear();
+    for (let yr = y0; yr <= y1 + 1; yr++) {
+      const t = Date.UTC(yr, 0, 1);
+      if (t >= tMin - 3e10 && t <= tMax + 3e10) xTicks.push({
+        t,
+        lab: String(yr)
+      });
+    }
   }
 
   // nearest point per series to the hovered time
@@ -1762,11 +2011,11 @@ function ExploreChart({
     x: M.l - 8,
     y: y(v) + 4,
     className: "tick tick-l"
-  }, indexed ? v.toFixed(0) : v))), yrTicks.map(({
+  }, indexed ? v.toFixed(0) : v))), xTicks.map(({
     t,
-    yr
-  }) => /*#__PURE__*/React.createElement("g", {
-    key: yr
+    lab
+  }, i) => /*#__PURE__*/React.createElement("g", {
+    key: i
   }, /*#__PURE__*/React.createElement("line", {
     x1: x(t),
     x2: x(t),
@@ -1777,7 +2026,7 @@ function ExploreChart({
     x: x(t),
     y: H - 20,
     className: "tick tick-x"
-  }, yr))), /*#__PURE__*/React.createElement("text", {
+  }, lab))), /*#__PURE__*/React.createElement("text", {
     x: M.l,
     y: 12,
     className: "axis-name"
@@ -1878,23 +2127,25 @@ function ExploreView({
   const [basis, setBasis] = useState("per_cwt");
   const [indexed, setIndexed] = useState(false);
   const [smoothed, setSmoothed] = useState(false);
+  const [days, setDays] = useState(0); // 0 = all history
   const [picker, setPicker] = useState({
     group: allBarns[0].group,
     commodity: null,
     cls: null,
-    grade: "all",
-    wtLo: null
+    grade: "all"
   });
+  const [checkedWts, setCheckedWts] = useState(new Set());
+  const [wtOpen, setWtOpen] = useState(false);
   const [added, setAdded] = useState([]); // list of {id, group, commodity, cls, grade, wtLo, color, label}
   const nextColor = useRef(0);
   useEffect(() => {
     setAdded([]);
+    setCheckedWts(new Set());
     setPicker({
       group: marketsForSpecies(species)[0].group,
       commodity: null,
       cls: null,
-      grade: "all",
-      wtLo: null
+      grade: "all"
     });
   }, [species]);
 
@@ -1925,28 +2176,42 @@ function ExploreView({
     if (!opts || !opts.size) return;
     let {
       commodity,
-      cls,
-      wtLo
+      cls
     } = picker;
     if (!commodity || !opts.has(commodity)) {
       commodity = [...opts.keys()][0];
       cls = null;
-      wtLo = null;
     }
     const cm = opts.get(commodity);
     if (!cls || !cm.has(cls)) {
       cls = [...cm.keys()][0];
-      wtLo = null;
     }
-    const ws = [...cm.get(cls)].sort((a, b) => a - b);
-    if (wtLo == null || !cm.get(cls).has(wtLo)) wtLo = ws[0] ?? null;
-    if (commodity !== picker.commodity || cls !== picker.cls || wtLo !== picker.wtLo) setPicker(p => ({
-      ...p,
-      commodity,
-      cls,
-      wtLo
-    }));
+    if (commodity !== picker.commodity || cls !== picker.cls) {
+      setPicker(p => ({
+        ...p,
+        commodity,
+        cls
+      }));
+      setCheckedWts(new Set());
+    }
   }, [opts]);
+
+  // available weights for the current commodity/class
+  const availWts = useMemo(() => {
+    if (!opts || !picker.commodity || !picker.cls) return [];
+    const cm = opts.get(picker.commodity);
+    if (!cm || !cm.has(picker.cls)) return [];
+    return [...cm.get(picker.cls)].sort((a, b) => a - b);
+  }, [opts, picker.commodity, picker.cls]);
+  const wtRef = useRef(null);
+  useEffect(() => {
+    if (!wtOpen) return;
+    const onDoc = e => {
+      if (wtRef.current && !wtRef.current.contains(e.target)) setWtOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [wtOpen]);
   const grades = useMemo(() => {
     if (!pickerRows || !picker.commodity || !picker.cls) return ["all"];
     const set = new Set();
@@ -1955,17 +2220,28 @@ function ExploreView({
   }, [pickerRows, picker.commodity, picker.cls, rowSpecies]);
   const addSeries = () => {
     const barn = MARKETS.find(m => m.group === picker.group);
-    const label = `${barn.label} · ${picker.cls}${picker.grade !== "all" ? " #" + picker.grade : ""} · ${picker.wtLo}–${picker.wtLo + 50}`;
-    const id = `${picker.group}|${picker.commodity}|${picker.cls}|${picker.grade}|${picker.wtLo}|${basis}`;
-    if (added.some(a => a.id === id)) return;
-    const color = SERIES_COLORS[nextColor.current++ % SERIES_COLORS.length];
-    setAdded(a => [...a, {
-      id,
-      ...picker,
-      basis,
-      color,
-      label
-    }]);
+    const wts = [...checkedWts].sort((a, b) => a - b);
+    setAdded(a => {
+      const out = [...a];
+      for (const wtLo of wts) {
+        const id = `${picker.group}|${picker.commodity}|${picker.cls}|${picker.grade}|${wtLo}|${basis}`;
+        if (out.some(x => x.id === id)) continue;
+        const label = `${barn.label} · ${picker.cls}${picker.grade !== "all" ? " #" + picker.grade : ""} · ${wtLo}–${wtLo + 50}`;
+        const color = SERIES_COLORS[nextColor.current++ % SERIES_COLORS.length];
+        out.push({
+          id,
+          group: picker.group,
+          commodity: picker.commodity,
+          cls: picker.cls,
+          grade: picker.grade,
+          wtLo,
+          basis,
+          color,
+          label
+        });
+      }
+      return out;
+    });
   };
   const removeSeries = id => setAdded(a => a.filter(x => x.id !== id));
   const basisLabel = basis === "per_cwt" ? "CWT" : basis === "per_head" ? "HEAD" : basis === "per_unit" ? "UNIT" : "FAMILY";
@@ -1981,6 +2257,11 @@ function ExploreView({
         wtLo: a.wtLo,
         basis: a.basis
       });
+      if (days > 0 && pts.length) {
+        const maxT = Math.max(...pts.map(p => p.t));
+        const cutoff = maxT - days * 86400000;
+        pts = pts.filter(p => p.t >= cutoff);
+      }
       if (smoothed) pts = smooth4(pts);
       if (indexed) pts = indexToStart(pts);
       return {
@@ -1990,7 +2271,7 @@ function ExploreView({
         basisLabel
       };
     });
-  }, [cache, added, allLoaded, smoothed, indexed, rowSpecies, basisLabel]);
+  }, [cache, added, allLoaded, smoothed, indexed, rowSpecies, basisLabel, days]);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "controls"
   }, /*#__PURE__*/React.createElement("label", null, "Market", /*#__PURE__*/React.createElement("select", {
@@ -2025,21 +2306,45 @@ function ExploreView({
   }, grades.map(g => /*#__PURE__*/React.createElement("option", {
     key: g,
     value: g
-  }, g === "all" ? "All" : "#" + g)))), /*#__PURE__*/React.createElement("label", null, "Weight", /*#__PURE__*/React.createElement("select", {
-    value: picker.wtLo ?? "",
-    onChange: e => setPicker(p => ({
-      ...p,
-      wtLo: Number(e.target.value)
-    })),
-    disabled: !opts || !picker.cls
-  }, opts && picker.commodity && picker.cls && opts.get(picker.commodity) && opts.get(picker.commodity).has(picker.cls) && [...opts.get(picker.commodity).get(picker.cls)].sort((a, b) => a - b).map(w => /*#__PURE__*/React.createElement("option", {
+  }, g === "all" ? "All" : "#" + g)))), /*#__PURE__*/React.createElement("div", {
+    className: "wt-check-group"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "wt-check-label"
+  }, "Weights"), /*#__PURE__*/React.createElement("div", {
+    className: "wt-dropdown",
+    ref: wtRef
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "wt-trigger" + (wtOpen ? " open" : ""),
+    onClick: () => setWtOpen(o => !o),
+    disabled: availWts.length === 0
+  }, /*#__PURE__*/React.createElement("span", null, checkedWts.size === 0 ? "Select weights" : checkedWts.size === 1 ? `${[...checkedWts][0]}–${[...checkedWts][0] + 50} lb` : `${checkedWts.size} selected`), /*#__PURE__*/React.createElement("span", {
+    className: "wt-arrow"
+  }, "▾")), wtOpen && /*#__PURE__*/React.createElement("div", {
+    className: "wt-menu"
+  }, availWts.length > 1 && /*#__PURE__*/React.createElement("button", {
+    className: "wt-all-btn",
+    onClick: () => setCheckedWts(prev => prev.size === availWts.length ? new Set() : new Set(availWts))
+  }, checkedWts.size === availWts.length ? "Clear all" : "Select all"), availWts.map(w => /*#__PURE__*/React.createElement("label", {
     key: w,
-    value: w
-  }, w, "–", w + 50, " lb")))), /*#__PURE__*/React.createElement("button", {
+    className: "wt-opt" + (checkedWts.has(w) ? " on" : "")
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: checkedWts.has(w),
+    onChange: e => {
+      setCheckedWts(prev => {
+        const n = new Set(prev);
+        e.target.checked ? n.add(w) : n.delete(w);
+        return n;
+      });
+    }
+  }), w, "–", w + 50, " lb"))))), /*#__PURE__*/React.createElement("button", {
     className: "add-btn",
-    onClick: addSeries,
-    disabled: !picker.cls || picker.wtLo == null
-  }, "+ Add line")), /*#__PURE__*/React.createElement("div", {
+    onClick: () => {
+      addSeries();
+      setWtOpen(false);
+    },
+    disabled: !picker.cls || checkedWts.size === 0
+  }, "+ Add ", checkedWts.size > 1 ? checkedWts.size + " lines" : "line")), /*#__PURE__*/React.createElement("div", {
     className: "explore-toggles"
   }, /*#__PURE__*/React.createElement("label", {
     className: "seg"
@@ -2058,6 +2363,27 @@ function ExploreView({
   }, "$/unit"), /*#__PURE__*/React.createElement("option", {
     value: "per_family"
   }, "$/family"))), /*#__PURE__*/React.createElement("label", {
+    className: "seg"
+  }, "Window", /*#__PURE__*/React.createElement("select", {
+    value: days,
+    onChange: e => setDays(Number(e.target.value))
+  }, /*#__PURE__*/React.createElement("option", {
+    value: 0
+  }, "All history"), /*#__PURE__*/React.createElement("option", {
+    value: 30
+  }, "30 days"), /*#__PURE__*/React.createElement("option", {
+    value: 90
+  }, "90 days"), /*#__PURE__*/React.createElement("option", {
+    value: 182
+  }, "6 months"), /*#__PURE__*/React.createElement("option", {
+    value: 365
+  }, "1 year"), /*#__PURE__*/React.createElement("option", {
+    value: 730
+  }, "2 years"), /*#__PURE__*/React.createElement("option", {
+    value: 1095
+  }, "3 years"), /*#__PURE__*/React.createElement("option", {
+    value: 1825
+  }, "5 years"))), /*#__PURE__*/React.createElement("label", {
     className: "chk"
   }, /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
@@ -2335,6 +2661,129 @@ function InfoView() {
   }, "“Head/Yr” is total reported head divided by years of data — the cleanest size measure. “Avg/Sale” is head per sale-day. Regional summaries aggregate many barns, so their volume isn’t comparable to a single barn’s. Video/internet reports are episodic (a few large sales a year). Slug = USDA MARS report ID."));
 }
 
+/* ---------- GRADES: original feeder-cattle grade reference ---------- */
+function MuscleFigure({
+  score,
+  label,
+  sub
+}) {
+  const cfg = {
+    1: {
+      round: 46,
+      leg: 30,
+      fill: "#8a9b6a",
+      desc: "widest through the muscle"
+    },
+    2: {
+      round: 33,
+      leg: 22,
+      fill: "#b0a878",
+      desc: "moderate, flatter"
+    },
+    3: {
+      round: 20,
+      leg: 13,
+      fill: "#c98f6a",
+      desc: "widest at the hips (bone)"
+    }
+  }[score];
+  const cx = 60,
+    hipW = 34;
+  return /*#__PURE__*/React.createElement("figure", {
+    className: "muscle-fig"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 120 130",
+    role: "img",
+    "aria-label": `Rear view muscle score ${score}: ${cfg.desc}`
+  }, /*#__PURE__*/React.createElement("ellipse", {
+    cx: cx,
+    cy: 34,
+    rx: hipW,
+    ry: 18,
+    className: "mf-hip"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: `M${cx - cfg.round},60
+          C${cx - cfg.round},95 ${cx - cfg.leg},112 ${cx - cfg.leg},124
+          L${cx - cfg.leg + 8},124
+          C${cx - cfg.leg + 8},112 ${cx - 4},96 ${cx},96
+          C${cx + 4},96 ${cx + cfg.leg - 8},112 ${cx + cfg.leg - 8},124
+          L${cx + cfg.leg},124
+          C${cx + cfg.leg},112 ${cx + cfg.round},95 ${cx + cfg.round},60
+          C${cx + cfg.round},46 ${cx - cfg.round},46 ${cx - cfg.round},60 Z`,
+    style: {
+      fill: cfg.fill
+    },
+    className: "mf-round"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: cx,
+    y1: 30,
+    x2: cx,
+    y2: 70,
+    className: "mf-tail"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: cx - cfg.round,
+    y1: 72,
+    x2: cx + cfg.round,
+    y2: 72,
+    className: "mf-width"
+  })), /*#__PURE__*/React.createElement("figcaption", null, /*#__PURE__*/React.createElement("strong", null, label), /*#__PURE__*/React.createElement("span", null, sub)));
+}
+function GradesView() {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "grades-view"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "grades-intro"
+  }, "USDA feeder grades are the common language of the sale barn — how a market reporter (and every buyer in the seats) sizes up a calf in seconds. A grade is two separate things scored independently:", /*#__PURE__*/React.createElement("strong", null, " frame size"), " (how big it'll finish) and ", /*#__PURE__*/React.createElement("strong", null, " muscle thickness"), " (#1, #2, #3 — how much lean it carries). Price follows both, plus a stack of things the grade doesn't capture at all."), /*#__PURE__*/React.createElement("h3", {
+    className: "grades-h"
+  }, "Muscle thickness — the #1 / #2 / #3 in market reports"), /*#__PURE__*/React.createElement("p", {
+    className: "grades-p"
+  }, "Scored from the rear. The single best test: ", /*#__PURE__*/React.createElement("strong", null, "where is the animal widest?"), " If the width is carried down in the ", /*#__PURE__*/React.createElement("em", null, "muscle"), " of the round, it's a No. 1. If the widest points are the ", /*#__PURE__*/React.createElement("em", null, "hip bones"), " with a shallow round between them, it's a No. 3. Most cattle sit between as No. 2s — as the USDA graders put it, \"nearly everyone thinks they raise No. 1s, but No. 2s are far more common.\""), /*#__PURE__*/React.createElement("div", {
+    className: "muscle-row"
+  }, /*#__PURE__*/React.createElement(MuscleFigure, {
+    score: 1,
+    label: "No. 1",
+    sub: "Moderately thick"
+  }), /*#__PURE__*/React.createElement(MuscleFigure, {
+    score: 2,
+    label: "No. 2",
+    sub: "Slightly thick — most cattle"
+  }), /*#__PURE__*/React.createElement(MuscleFigure, {
+    score: 3,
+    label: "No. 3",
+    sub: "Thin, close-set legs"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "grades-cards"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "gr-card gr-1"
+  }, /*#__PURE__*/React.createElement("h4", null, "No. 1"), /*#__PURE__*/React.createElement("p", null, "Moderately thick and full through the forearm and gaskin. Rounded look over the back and loin, moderate width between the legs front and rear. Predominantly beef breeding. Looks like it's ", /*#__PURE__*/React.createElement("em", null, "carrying muscle"), " — width greatest at the center of the round.")), /*#__PURE__*/React.createElement("div", {
+    className: "gr-card gr-2"
+  }, /*#__PURE__*/React.createElement("h4", null, "No. 2"), /*#__PURE__*/React.createElement("p", null, "At least slight thickness throughout, slight width between the legs — flatter than a No. 1 but still adequately made. High proportion of beef breeding, maybe a touch of dairy. The honest home of most good commercial cattle.")), /*#__PURE__*/React.createElement("div", {
+    className: "gr-card gr-3"
+  }, /*#__PURE__*/React.createElement("h4", null, "No. 3"), /*#__PURE__*/React.createElement("p", null, "Thin throughout, legs set close together, widest at the hooks and pins rather than the muscle. Often shows dairy influence. Sharp and angular from behind."))), /*#__PURE__*/React.createElement("h3", {
+    className: "grades-h"
+  }, "Frame size — how big it finishes"), /*#__PURE__*/React.createElement("p", {
+    className: "grades-p"
+  }, "Separate from muscle. Frame predicts the weight at which a calf reaches Choice finish. Eyeball test from the side: compare ", /*#__PURE__*/React.createElement("strong", null, "ground clearance (leg length) to body depth"), "."), /*#__PURE__*/React.createElement("div", {
+    className: "grades-cards"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "gr-card"
+  }, /*#__PURE__*/React.createElement("h4", null, "Large"), /*#__PURE__*/React.createElement("p", null, "Tall, long-bodied for its age; leg longer than body is deep. Steers finish Choice ~1,250 lb+, heifers ~1,150 lb+. More time on feed, heavier out.")), /*#__PURE__*/React.createElement("div", {
+    className: "gr-card"
+  }, /*#__PURE__*/React.createElement("h4", null, "Medium"), /*#__PURE__*/React.createElement("p", null, "Ground clearance about even with body depth. Steers ~1,100–1,250 lb, heifers ~1,000–1,150 lb. The bulk of the commercial herd.")), /*#__PURE__*/React.createElement("div", {
+    className: "gr-card"
+  }, /*#__PURE__*/React.createElement("h4", null, "Small"), /*#__PURE__*/React.createElement("p", null, "More depth of body than leg — short and squatty, may show early fat. Finishes under ~1,100 lb (steers) / 1,000 lb (heifers)."))), /*#__PURE__*/React.createElement("h3", {
+    className: "grades-h"
+  }, "What the grade does ", /*#__PURE__*/React.createElement("em", null, "not"), " capture — but the market still docks"), /*#__PURE__*/React.createElement("p", {
+    className: "grades-p"
+  }, "Often this matters more than the grade. Two calves with identical #2 muscle can sell $100/cwt apart on factors outside the grade:"), /*#__PURE__*/React.createElement("ul", {
+    className: "grades-list"
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "Hide color."), " Solid black brings a premium; spots, greys, and off-colors get docked regardless of muscle. A thick spotted steer can grade up on muscle yet sell like a #2 on color alone."), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "Health & defects."), " A blue/white eye from healed pinkeye, lump jaw, lameness — buyers see these instantly and price the risk. A permanent discount unrelated to grade."), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "Flesh (condition)."), " Scored 1–9. Too thin or too fleshy both dock price; a fleshy calf has less gain left to give. Excess flesh even makes a well-muscled calf look ", /*#__PURE__*/React.createElement("em", null, "squarer"), " and less thick from behind."), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "Uniformity & lot size."), " A tight, matched group of one color and weight sells far above the same cattle sold as singles or mixed drafts. Sorting is real money."), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "Fill, thriftiness, disposition"), " — all move price, none are in the muscle score.")), /*#__PURE__*/React.createElement("div", {
+    className: "grades-note"
+  }, /*#__PURE__*/React.createElement("strong", null, "Reading your own cattle:"), " stand directly behind them. If you see a real muscle bulge down the center of the round, you've got No. 1 thickness — and if those cattle still sell like #2s, the discount is coming from ", /*#__PURE__*/React.createElement("em", null, "color, flesh, or a defect"), ", not the muscle. That points at different fixes: hide-color genetics vs. bull selection for thickness vs. health management. The market usually prices rationally; the grade tells you which lever to pull."), /*#__PURE__*/React.createElement("p", {
+    className: "grades-src"
+  }, "Definitions summarized from the USDA AMS \"U.S. Standards for Grades of Feeder Cattle\" (revised 2000). Diagrams are original schematics illustrating the where-is-it-widest test, not to scale."));
+}
+
 /* ---------- APP SHELL: species tabs + view tabs ---------- */
 function App() {
   const [species, setSpecies] = useState("cattle");
@@ -2357,7 +2806,7 @@ function App() {
     className: "species-tabs",
     role: "tablist",
     style: {
-      visibility: view === "info" ? "hidden" : "visible"
+      visibility: view === "info" || view === "grades" ? "hidden" : "visible"
     }
   }, SPECIES.map(s => /*#__PURE__*/React.createElement("button", {
     key: s.key,
@@ -2379,7 +2828,10 @@ function App() {
   }, "Explore"), /*#__PURE__*/React.createElement("button", {
     className: "view-tab" + (view === "info" ? " on" : ""),
     onClick: () => setView("info")
-  }, "Sale Barn Info")), view === "compare" ? /*#__PURE__*/React.createElement(CompareView, {
+  }, "Sale Barn Info"), /*#__PURE__*/React.createElement("button", {
+    className: "view-tab" + (view === "grades" ? " on" : ""),
+    onClick: () => setView("grades")
+  }, "Grades")), view === "compare" ? /*#__PURE__*/React.createElement(CompareView, {
     key: species,
     species: species
   }) : view === "seasonal" ? /*#__PURE__*/React.createElement(SeasonalView, {
@@ -2388,7 +2840,7 @@ function App() {
   }) : view === "explore" ? /*#__PURE__*/React.createElement(ExploreView, {
     key: species,
     species: species
-  }) : /*#__PURE__*/React.createElement(InfoView, null));
+  }) : view === "grades" ? /*#__PURE__*/React.createElement(GradesView, null) : /*#__PURE__*/React.createElement(InfoView, null));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
 
