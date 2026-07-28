@@ -306,24 +306,6 @@
       "species": "cattle",
       "tier": "tradeable",
       "market_group": "san_angelo_cattle"
-    },
-    {
-      "slug_id": 3172,
-      "slug": "SA_LS850",
-      "title": "National Sheep Summary (Daily)",
-      "location": "National",
-      "species": "sheep_goat",
-      "tier": "context",
-      "market_group": "natl_sheep_summary"
-    },
-    {
-      "slug_id": 3173,
-      "slug": "SA_LS855",
-      "title": "Weekly National Sheep Summary",
-      "location": "National",
-      "species": "sheep_goat",
-      "tier": "context",
-      "market_group": "natl_sheep_weekly"
     }
   ],
   "_pending_verification": [
